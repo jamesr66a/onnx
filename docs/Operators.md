@@ -117,10 +117,6 @@
 ## ai.onnx (default)
 ### <a name="Abs"></a><a name="abs">**Abs**</a>
 
-  Absolute takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the absolute is, y = abs(x), is applied to
-  the tensor elementwise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -135,21 +131,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -176,25 +172,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Add"></a><a name="add">**Add**</a>
 
-  Performs element-wise binary addition (with limited broadcast support).
-  
-  If necessary the right-hand-side argument will be broadcasted to match the
-  shape of left-hand-side argument. When broadcasting is specified, the second
-  tensor can either be of size 1 (a scalar value), or having its shape as a
-  contiguous subset of the first tensor's shape. The starting of the mutually
-  equal shape is specified by the argument "axis", and if it is not set, suffix
-  matching is assumed. 1-dim expansion doesn't work yet.
-  
-  For example, the following tensor shapes are supported (with broadcast=1):
-  
-    shape(A) = (2, 3, 4, 5), shape(B) = (,), i.e. B is a scalar
-    shape(A) = (2, 3, 4, 5), shape(B) = (5,)
-    shape(A) = (2, 3, 4, 5), shape(B) = (4, 5)
-    shape(A) = (2, 3, 4, 5), shape(B) = (3, 4), with axis=1
-    shape(A) = (2, 3, 4, 5), shape(B) = (2), with axis=0
-  
-  Attribute `broadcast=1` needs to be passed to enable broadcasting.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -209,32 +186,32 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>If set, defines the broadcast dimensions. See doc for details.</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Pass 1 to enable broadcasting</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>First operand, should share the type with the second operand.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>Second operand. With broadcasting can be of smaller size than A. If broadcasting is disabled it should be of the same size.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>C</tt> : T</dt>
-<dd>Result, has same dimensions and type as A</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -281,13 +258,6 @@ expect(node, inputs=[x, y], outputs=[x + y],
 
 ### <a name="And"></a><a name="and">**And**</a>
 
-  Returns the tensor resulted from performing the `and` logical operation
-  elementwise on the input tensors `A` and `B`.
-  
-  If broadcasting is enabled, the right-hand-side argument will be broadcasted
-  to match the shape of left-hand-side argument. See the doc of `Add` for a
-  detailed description of the broadcasting rules.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -302,34 +272,34 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>If set, defines the broadcast dimensions.</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Enable broadcasting</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>Left input tensor for the logical operator.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>Right input tensor for the logical operator.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>C</tt> : T1</dt>
-<dd>Result tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(bool)</dt>
-<dd>Constrains input to boolean tensor.</dd>
+<dd></dd>
 <dt><tt>T1</tt> : tensor(bool)</dt>
-<dd>Constrains output to boolean tensor.</dd>
+<dd></dd>
 </dl>
 
 
@@ -474,11 +444,6 @@ expect(node, inputs=[x, y], outputs=[z],
 
 ### <a name="ArgMax"></a><a name="argmax">**ArgMax**</a>
 
-  Computes the indices of the max elements of the input tensor's element along the 
-  provided axis. The resulted tensor has the same rank as the input if keepdims equal 1.
-  If keepdims equal 0, then the resulted tensor have the reduced dimension pruned. 
-  The type of the output tensor is integer.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -493,40 +458,35 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>The axis in which to compute the arg indices</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : tensor(int32)</dt>
-<dd>Reduced output tensor with integer data type.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="ArgMin"></a><a name="argmin">**ArgMin**</a>
 
-  Computes the indices of the min elements of the input tensor's element along the 
-  provided axis. The resulted tensor has the same rank as the input if keepdims equal 1.
-  If keepdims equal 0, then the resulted tensor have the reduced dimension pruned. 
-  The type of the output tensor is integer.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -541,40 +501,34 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>The axis in which to compute the arg indices</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : tensor(int32)</dt>
-<dd>Reduced output tensor with integer data type.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="AveragePool"></a><a name="averagepool">**AveragePool**</a>
-
-  AveragePool consumes an input tensor X and applies average pooling across the
-   the tensor according to kernel sizes, stride sizes, and pad lengths.
-   average pooling consisting of computing the average on all values of a
-   subset of the input tensor according to the kernel size and downsampling the
-   data into the output tensor Y for further processing.
 
 #### Versioning
 
@@ -590,46 +544,38 @@ opset_import {
 
 <dl>
 <dt><tt>auto_pad</tt> : string</dt>
-<dd>auto_pad must be either SAME_UPPER, SAME_LOWER or VALID. Where SAME_UPPER or SAME_LOWER mean pad the input so that the output size match the input.In case of odd number add the extra padding at the end for SAME_UPPER and at the beginning for SAME_LOWER. VALID mean no padding. DEPRECATION NOTE: auto_pad is only intended to support legacy uses, and for framework authors, one is explicitly encouraged to use explicit padding specified in the pads attribute.</dd>
+<dd></dd>
 <dt><tt>kernel_shape</tt> : list of ints (required)</dt>
-<dd>The size of the kernel along each axis.</dd>
+<dd></dd>
 <dt><tt>pads</tt> : list of ints</dt>
-<dd>Padding for the beginning and ending along each axis, it can take any value greater than or equal to 0. The value represent the number of pixels added to the beginning and end part of the corresponding axis. `pads` format should be as follow [x1_begin, x2_begin...x1_end, x2_end,...], where xi_begin the number of pixels added at the beginning of axis `i` and xi_end, the number of pixels added at the end of axis `i`. This attribute cannot be used simultaneously with auto_pad attribute. If not present, the padding defaults to 0 along start and end of each axis.</dd>
+<dd></dd>
 <dt><tt>strides</tt> : list of ints</dt>
-<dd>Stride along each axis. If not present, the stride defaults to 1 along each axis.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input data tensor from the previous operator; dimensions for image case are (N x C x H x W), where N is the batch size, C is the number of channels, and H and W are the height and the width of the data. For non image case, the dimension are in the form of (N x C x D1 x D2 ... Dn), where N is the batch size.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output data tensor from average or max pooling across the input tensor. Dimensions will vary based on various kernel, stride, and pad sizes. Floor value of the dimension is used</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="BatchNormalization"></a><a name="batchnormalization">**BatchNormalization**</a>
-
-  Carries out batch normalization as described in the paper
-  https://arxiv.org/abs/1502.03167. Depending on the mode it is being run,
-  there are multiple cases for the number of outputs, which we list below:
-  
-  Output case #1: Y, mean, var, saved_mean, saved_var (training mode)
-  Output case #2: Y (test mode)
-      
 
 #### Versioning
 
@@ -645,61 +591,54 @@ opset_import {
 
 <dl>
 <dt><tt>epsilon</tt> : float</dt>
-<dd>The epsilon value to use to avoid division by zero, default is 1e-5f.</dd>
+<dd></dd>
 <dt><tt>is_test</tt> : int</dt>
-<dd>If set to nonzero, run spatial batch normalization in test mode, default is 0.</dd>
+<dd></dd>
 <dt><tt>momentum</tt> : float</dt>
-<dd>Factor used in computing the running mean and variance.e.g., running_mean = running_mean * momentum + mean * (1 - momentum), default is 0.9f.</dd>
+<dd></dd>
 <dt><tt>spatial</tt> : int</dt>
-<dd>If true, compute the mean and variance across all spatial elements If false, compute the mean and variance across per feature.Default is 1.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>The input 4-dimensional tensor of shape NCHW.</dd>
+<dd></dd>
 <dt><tt>scale</tt> : T</dt>
-<dd>The scale as a 1-dimensional tensor of size C to be applied to the output.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>The bias as a 1-dimensional tensor of size C to be applied to the output.</dd>
+<dd></dd>
 <dt><tt>mean</tt> : T</dt>
-<dd>The running mean (training) or the estimated mean (testing) as a 1-dimensional tensor of size C.</dd>
+<dd></dd>
 <dt><tt>var</tt> : T</dt>
-<dd>The running variance (training) or the estimated variance (testing) as a 1-dimensional tensor of size C.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs (1 - 5)
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>The output 4-dimensional tensor of the same shape as X.</dd>
+<dd></dd>
 <dt><tt>mean</tt> (optional) : T</dt>
-<dd>The running mean after the BatchNormalization operator. Must be in-place with the input mean. Should not be used for testing.</dd>
+<dd></dd>
 <dt><tt>var</tt> (optional) : T</dt>
-<dd>The running variance after the BatchNormalization operator. Must be in-place with the input var. Should not be used for testing.</dd>
+<dd></dd>
 <dt><tt>saved_mean</tt> (optional) : T</dt>
-<dd>Saved mean used during training to speed up gradient computation. Should not be used for testing.</dd>
+<dd></dd>
 <dt><tt>saved_var</tt> (optional) : T</dt>
-<dd>Saved variance used during training to speed up gradient computation. Should not be used for testing.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="Cast"></a><a name="cast">**Cast**</a>
-
-  The operator casts the elements of a given input tensor to a data type
-  specified by the 'to' argument and returns an output tensor of the same size in
-  the converted type. The 'to' argument must be one of the data types specified
-  in the 'DataType' enum field in the TensorProto message.
-  
-  NOTE: Casting to and from strings is not supported yet.
 
 #### Versioning
 
@@ -715,30 +654,30 @@ opset_import {
 
 <dl>
 <dt><tt>to</tt> : string (required)</dt>
-<dd>The data type to which the elements of the input tensor are cast.Strictly must be one of the types from DataType enum in TensorProto</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T1</dt>
-<dd>Input tensor to be cast.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T2</dt>
-<dd>Output tensor with the same shape as input with type specified by the 'to' argument</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T1</tt> : tensor(float16), tensor(float), tensor(double), tensor(int8), tensor(int16), tensor(int32), tensor(int64), tensor(uint8), tensor(uint16), tensor(uint32), tensor(uint64), tensor(bool)</dt>
-<dd>Constrain input types. Casting from strings and complex are not supported.</dd>
+<dd></dd>
 <dt><tt>T2</tt> : tensor(float16), tensor(float), tensor(double), tensor(int8), tensor(int16), tensor(int32), tensor(int64), tensor(uint8), tensor(uint16), tensor(uint32), tensor(uint64), tensor(bool)</dt>
-<dd>Constrain output types. Casting to strings and complex are not supported.</dd>
+<dd></dd>
 </dl>
 
 
@@ -777,10 +716,6 @@ for case in test_cases:
 
 ### <a name="Ceil"></a><a name="ceil">**Ceil**</a>
 
-  Ceil takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the ceil is, y = ceil(x), is applied to
-  the tensor elementwise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -795,21 +730,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -841,10 +776,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Clip"></a><a name="clip">**Clip**</a>
 
-  Clip operator limits the given input within an interval. The interval is
-  specified with arguments 'min' and 'max'. They default to
-  numeric_limits::lowest() and numeric_limits::max() respectively.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -859,30 +790,30 @@ opset_import {
 
 <dl>
 <dt><tt>max</tt> : float</dt>
-<dd>Maximum value, above which element is replaced by max</dd>
+<dd></dd>
 <dt><tt>min</tt> : float</dt>
-<dd>Minimum value, under which element is replaced by min</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input tensor whose elements to be clipped</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Output tensor with clipped input elements</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -946,8 +877,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Concat"></a><a name="concat">**Concat**</a>
 
-  Concatenate a list of tensors into a single tensor
-
 #### Versioning
 
 This operator is used if you are using version 4 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -964,28 +893,28 @@ Other versions of this operator: <a href="Changelog.md#Concat-1">Concat-1</a>
 
 <dl>
 <dt><tt>axis</tt> : int (required)</dt>
-<dd>Which axis to concat on</dd>
+<dd></dd>
 </dl>
 
 #### Inputs (1 - &#8734;)
 
 <dl>
 <dt><tt>inputs</tt> (variadic) : T</dt>
-<dd>List of tensors for concatenation</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>concat_result</tt> : T</dt>
-<dd>Concatenated tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -1024,8 +953,6 @@ for test_case, values in test_cases.items():
 
 ### <a name="Constant"></a><a name="constant">**Constant**</a>
 
-  A constant tensor.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -1040,7 +967,7 @@ opset_import {
 
 <dl>
 <dt><tt>value</tt> : tensor (required)</dt>
-<dd>The value for the elements of the output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
@@ -1050,14 +977,14 @@ opset_import {
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Output tensor containing the same value of the provided tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -1089,9 +1016,6 @@ expect(node, inputs=[], outputs=[values],
 
 ### <a name="Conv"></a><a name="conv">**Conv**</a>
 
-  The convolution operator consumes an input tensor and a filter, and
-  computes the output.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -1106,42 +1030,42 @@ opset_import {
 
 <dl>
 <dt><tt>auto_pad</tt> : string</dt>
-<dd>auto_pad must be either SAME_UPPER, SAME_LOWER or VALID. Where SAME_UPPER or SAME_LOWER mean pad the input so that the output size match the input.In case of odd number add the extra padding at the end for SAME_UPPER and at the beginning for SAME_LOWER. VALID mean no padding. DEPRECATION NOTE: auto_pad is only intended to support legacy uses, and for framework authors, one is explicitly encouraged to use explicit padding specified in the pads attribute.</dd>
+<dd></dd>
 <dt><tt>dilations</tt> : list of ints</dt>
-<dd>dilation value along each axis of the filter. If not present, the dilation defaults to 1 along each axis.</dd>
+<dd></dd>
 <dt><tt>group</tt> : int</dt>
-<dd>number of groups input channels and output channels are divided into, default is 1.</dd>
+<dd></dd>
 <dt><tt>kernel_shape</tt> : list of ints</dt>
-<dd>The shape of the convolution kernel. If not present, should be inferred from input W.</dd>
+<dd></dd>
 <dt><tt>pads</tt> : list of ints</dt>
-<dd>Padding for the beginning and ending along each axis, it can take any value greater than or equal to 0. The value represent the number of pixels added to the beginning and end part of the corresponding axis. `pads` format should be as follow [x1_begin, x2_begin...x1_end, x2_end,...], where xi_begin the number of pixels added at the beginning of axis `i` and xi_end, the number of pixels added at the end of axis `i`. This attribute cannot be used simultaneously with auto_pad attribute. If not present, the padding defaults to 0 along start and end of each axis.</dd>
+<dd></dd>
 <dt><tt>strides</tt> : list of ints</dt>
-<dd>Stride along each axis. If not present, the stride defaults to 1 along each axis.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs (2 - 3)
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input data tensor from previous layer; has size (N x C x H x W), where N is the batch size, C is the number of channels, and H and W are the height and width. Note that this is for the 2D image.Otherwise the size is (N x D1 x D2 ... x Dn)</dd>
+<dd></dd>
 <dt><tt>W</tt> : T</dt>
-<dd>The weight tensor that will be used in the convolutions; has size (M x C x kH x kW), where C is the number of channels, and kH and kW are the height and width of the kernel, and M is the number of feature maps. For more than 2 dimensions, the kernel shape will be (M x C x k1 x k2 x ... x kn), where is the dimension of the kernel</dd>
+<dd></dd>
 <dt><tt>B</tt> (optional) : T</dt>
-<dd>Optional 1D bias to be added to the convolution, has size of M.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output data tensor that contains the result of the convolution. The output dimensions are functions of the kernel size, stride size, and pad lengths.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -1264,9 +1188,6 @@ expect(node_with_asymmetric_padding, inputs=[x, W], outputs=[y_with_asymmetric_p
 
 ### <a name="ConvTranspose"></a><a name="convtranspose">**ConvTranspose**</a>
 
-  The convolution transpose operator consumes an input tensor and a filter,
-  and computes the output.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -1281,55 +1202,50 @@ opset_import {
 
 <dl>
 <dt><tt>auto_pad</tt> : string</dt>
-<dd>auto_pad must be either SAME_UPPER, SAME_LOWER or VALID. Where SAME_UPPER or SAME_LOWER mean pad the input so that the output size match the input.In case of odd number add the extra padding at the end for SAME_UPPER and at the beginning for SAME_LOWER. VALID mean no padding. DEPRECATION NOTE: auto_pad is only intended to support legacy uses, and for framework authors, one is explicitly encouraged to use explicit padding specified in the pads attribute.</dd>
+<dd></dd>
 <dt><tt>dilations</tt> : list of ints</dt>
-<dd>dilation value along each axis of the filter. If not present, the dilation defaults to 1 along each axis.</dd>
+<dd></dd>
 <dt><tt>group</tt> : int</dt>
-<dd>number of groups input channels and output channels are divided into, default is 1.</dd>
+<dd></dd>
 <dt><tt>kernel_shape</tt> : list of ints</dt>
-<dd>The shape of the convolution kernel. If not present, should be inferred from input W.</dd>
+<dd></dd>
 <dt><tt>output_padding</tt> : list of ints</dt>
-<dd>The zero-padding added to one side of the output. This is also called adjs/adjustment in some frameworks. If output_shape is set, this attribute will be ignored.</dd>
+<dd></dd>
 <dt><tt>output_shape</tt> : list of ints</dt>
-<dd>The shape of the output. output_shape[i] = stride[i] * (input_size[i] - 1) + output_padding[i] + kernel_shape[i] - pads[start_i] - pads[end_i]</dd>
+<dd></dd>
 <dt><tt>pads</tt> : list of ints</dt>
-<dd>Padding for the beginning and ending along each axis, it can take any value greater than or equal to 0. The value represent the number of pixels added to the beginning and end part of the corresponding axis. `pads` format should be as follow [x1_begin, x2_begin...x1_end, x2_end,...], where xi_begin the number of pixels added at the beginning of axis `i` and xi_end, the number of pixels added at the end of axis `i`. This attribute cannot be used simultaneously with auto_pad attribute. If not present, the padding defaults to 0 along start and end of each axis.</dd>
+<dd></dd>
 <dt><tt>strides</tt> : list of ints</dt>
-<dd>Stride along each axis. If not present, the stride defaults to 1 along each axis.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs (2 - 3)
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input data tensor from previous layer; has size (N x C x H x W), where N is the batch size, C is the number of channels, and H and W are the height and width. Note that this is for the 2D image.Otherwise the size is (N x D1 x D2 ... x Dn)</dd>
+<dd></dd>
 <dt><tt>W</tt> : T</dt>
-<dd>The weight tensor that will be used in the convolutions; has size (C x M x kH x kW), where C is the number of channels, and kH and kW are the height and width of the kernel, and M is the number of feature maps. For more than 2 dimensions, the kernel shape will be (C x M x k1 x k2 x ... x kn), where is the dimension of the kernel</dd>
+<dd></dd>
 <dt><tt>B</tt> (optional) : T</dt>
-<dd>Optional 1D bias to be added to the convolution, has size of C.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output data tensor that contains the result of the convolution. The output dimensions are functions of the kernel size, stride size, and pad lengths.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="DepthToSpace"></a><a name="depthtospace">**DepthToSpace**</a>
-
-  DepthToSpace rearranges (permutes) data from depth into blocks of spatial data.
-  This is the reverse transformation of SpaceToDepth. More specifically, this op outputs a copy of
-  the input tensor where values from the depth dimension are moved in spatial blocks to the height
-  and width dimensions.
 
 #### Versioning
 
@@ -1345,51 +1261,32 @@ opset_import {
 
 <dl>
 <dt><tt>blocksize</tt> : int</dt>
-<dd>Blocks of [blocksize, blocksize] are moved.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input tensor of [N,C,H,W], where N is the batch axis, C is the channel or depth, H is the height and W is the width.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Output tensor of [N, C/(blocksize * blocksize), H * blocksize, W * blocksize].</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="Div"></a><a name="div">**Div**</a>
-
-  Performs element-wise binary division (with limited broadcast support).
-  
-  If necessary the right-hand-side argument will be broadcasted to match the
-  shape of left-hand-side argument. When broadcasting is specified, the second
-  tensor can either be of size 1 (a scalar value), or having its shape as a
-  contiguous subset of the first tensor's shape. The starting of the mutually
-  equal shape is specified by the argument "axis", and if it is not set, suffix
-  matching is assumed. 1-dim expansion doesn't work yet.
-  
-  For example, the following tensor shapes are supported (with broadcast=1):
-  
-    shape(A) = (2, 3, 4, 5), shape(B) = (,), i.e. B is a scalar
-    shape(A) = (2, 3, 4, 5), shape(B) = (5,)
-    shape(A) = (2, 3, 4, 5), shape(B) = (4, 5)
-    shape(A) = (2, 3, 4, 5), shape(B) = (3, 4), with axis=1
-    shape(A) = (2, 3, 4, 5), shape(B) = (2), with axis=0
-  
-  Attribute `broadcast=1` needs to be passed to enable broadcasting.
 
 #### Versioning
 
@@ -1405,32 +1302,32 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>If set, defines the broadcast dimensions. See doc for details.</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Pass 1 to enable broadcasting</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>First operand, should share the type with the second operand.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>Second operand. With broadcasting can be of smaller size than A. If broadcasting is disabled it should be of the same size.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>C</tt> : T</dt>
-<dd>Result, has same dimensions and type as A</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -1485,12 +1382,6 @@ expect(node, inputs=[x, y], outputs=[z],
 
 ### <a name="Dropout"></a><a name="dropout">**Dropout**</a>
 
-  Dropout takes one input data (Tensor<float>) and produces two Tensor outputs,
-  output (Tensor<float>) and mask (Tensor<bool>). Depending on whether it is in
-  test mode or not, the output Y will either be a random dropout, or a simple
-  copy of the input. Note that our implementation of Dropout does scaling in
-  the training phase, so during testing nothing needs to be done.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -1505,41 +1396,36 @@ opset_import {
 
 <dl>
 <dt><tt>is_test</tt> : int</dt>
-<dd>(int, default 0) if nonzero, run dropout in test mode where the output is simply Y = X.</dd>
+<dd></dd>
 <dt><tt>ratio</tt> : float</dt>
-<dd>(float, default 0.5) the ratio of random dropout</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>The input data as Tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs (1 - 2)
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>The output.</dd>
+<dd></dd>
 <dt><tt>mask</tt> (optional) : T</dt>
-<dd>The output mask. If is_test is nonzero, this output is not filled.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="Elu"></a><a name="elu">**Elu**</a>
-
-  Elu takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the function `f(x) = alpha * (exp(x) - 1.) for x <
-  0`, `f(x) = x for x >= 0`., is applied to the tensor elementwise.
-  
 
 #### Versioning
 
@@ -1555,28 +1441,28 @@ opset_import {
 
 <dl>
 <dt><tt>alpha</tt> : float</dt>
-<dd>Coefficient of ELU default to 1.0.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>1D input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>1D input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -1629,13 +1515,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Equal"></a><a name="equal">**Equal**</a>
 
-  Returns the tensor resulted from performing the `equal` logical operation
-  elementwise on the input tensors `A` and `B`.
-  
-  If broadcasting is enabled, the right-hand-side argument will be broadcasted
-  to match the shape of left-hand-side argument. See the doc of `Add` for a
-  detailed description of the broadcasting rules.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -1650,34 +1529,34 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>If set, defines the broadcast dimensions.</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Enable broadcasting</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>Left input tensor for the logical operator.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>Right input tensor for the logical operator.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>C</tt> : T1</dt>
-<dd>Result tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(bool), tensor(int32), tensor(int64)</dt>
-<dd>Constrains input to integral tensors.</dd>
+<dd></dd>
 <dt><tt>T1</tt> : tensor(bool)</dt>
-<dd>Constrains output to boolean tensor.</dd>
+<dd></dd>
 </dl>
 
 
@@ -1726,8 +1605,6 @@ expect(node, inputs=[x, y], outputs=[z],
 
 ### <a name="Exp"></a><a name="exp">**Exp**</a>
 
-  Calculates the exponential of the given input tensor, element-wise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -1742,21 +1619,21 @@ opset_import {
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>The exponential of the input tensor computed element-wise</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -1788,10 +1665,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Flatten"></a><a name="flatten">**Flatten**</a>
 
-  Flattens the input tensor into a 2D matrix. If input tensor has shape
-  (d_0, d_1, ... d_n) then the output will have shape
-  (d_0 X d_1 ... d_(axis-1), d_axis X d_(axis+1) ... X dn).
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -1806,28 +1679,28 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>(Default to 1) Indicate up to which input dimensions (exclusive) should be flattened to the outer dimension of the output. The value for axis must be in the range [0, R], where R is the rank of the input tensor. When axis = 0, the shape of the output tensor is (1, (d_0 X d_1 ... d_n), where the shape of the input tensor is (d_0, d_1, ... d_n). </dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>A tensor of rank >= axis.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>A 2D tensor with the contents of the input tensor, with input dimensions up to axis flattened to the outer dimension of the output and remaining input dimensions flattened into the inner dimension of the output.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -1880,10 +1753,6 @@ expect(node, inputs=[a], outputs=[b],
 
 ### <a name="Floor"></a><a name="floor">**Floor**</a>
 
-  Floor takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the floor is, y = floor(x), is applied to
-  the tensor elementwise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -1898,21 +1767,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -1944,79 +1813,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="GRU"></a><a name="gru">**GRU**</a>
 
-  Computes an one-layer GRU. This operator is usually supported via some custom
-  implementation such as CuDNN.
-  
-  Notations:
-  
-  `X` - input tensor
-  
-  `z` - update gate
-  
-  `r` - reset gate
-  
-  `h` - hidden gate
-  
-  `t` - time step (t-1 means previous time step)
-  
-  `W[zrh]` - W parameter weight matrix for update, reset, and hidden gates
-  
-  `R[zrh]` - R recurrence weight matrix for update, reset, and hidden gates
-  
-  `Wb[zrh]` - W bias vectors for update, reset, and hidden gates
-  
-  `Rb[zrh]` - R bias vectors for update, reset, and hidden gates
-  
-  `WB[zrh]` - W parameter weight matrix for backward update, reset, and hidden gates
-  
-  `RB[zrh]` - R recurrence weight matrix for backward update, reset, and hidden gates
-  
-  `WBb[zrh]` - W bias vectors for backward update, reset, and hidden gates
-  
-  `RBb[zrh]` - R bias vectors for backward update, reset, and hidden gates
-  
-  `H` - Hidden state
-  
-  `num_directions` - 2 if direction == bidirectional else 1
-  
-  Activation functions:
-  
-    Relu(x)                - max(0, x)
-  
-    Tanh(x)                - (1 - e^{-2x})/(1 + e^{-2x})
-  
-    Sigmoid(x)             - 1/(1 + e^{-x})
-  
-    (NOTE: Below are optional)
-  
-    Affine(x)              - alpha*x + beta
-  
-    LeakyRelu(x)           - x if x >= 0 else alpha * x
-  
-    ThresholdedRelu(x)     - x if x >= alpha else 0
-  
-    ScaledTanh(x)          - alpha*Tanh(beta*x)
-  
-    HardSigmoid(x)         - min(max(alpha*x + beta, 0), 1)
-  
-    Elu(x)                 - x if x >= 0 else alpha*(e^x - 1)
-  
-    Softsign(x)            - x/(1 + |x|)
-  
-    Softplus(x)            - log(1 + e^x)
-  
-  Equations (Default: f=Sigmoid, g=Tanh):
-  
-    - zt = f(Xt*(Wz^T) + Ht-1*Rz + Wbz + Rbz)
-  
-    - rt = f(Xt*(Wr^T) + Ht-1*Rr + Wbr + Rbr)
-  
-    - ht = g(Xt*(Wh^T) + (rt (.) Ht-1)*Rh + Rbh + Wbh) # default, when linear_before_reset = 0
-  
-    - ht = g(Xt*(Wh^T) + (rt (.) (Ht-1*Rh + Rbh) + Wbh) # when linear_before_reset != 0
-  
-    - Ht = (1 - zt) (.) ht + zt (.) Ht-1
-
 #### Versioning
 
 This operator is used if you are using version 3 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -2033,103 +1829,60 @@ Other versions of this operator: <a href="Changelog.md#GRU-1">GRU-1</a>
 
 <dl>
 <dt><tt>activation_alpha</tt> : list of floats</dt>
-<dd>Optional scaling values used by some activation functions. The values are consumed in the order of activation functions, for example (f, g, h) in LSTM.</dd>
+<dd></dd>
 <dt><tt>activation_beta</tt> : list of floats</dt>
-<dd>Optional scaling values used by some activation functions. The values are consumed in the order of activation functions, for example (f, g, h) in LSTM.</dd>
+<dd></dd>
 <dt><tt>activations</tt> : list of strings</dt>
-<dd>A list of 2 (or 4 if bidirectional) activation functions for update, reset, and hidden gates. The activation functions must be one of the activation functions specified above. Optional: See the equations for default if not specified.</dd>
+<dd></dd>
 <dt><tt>clip</tt> : float</dt>
-<dd>Cell clip threshold. Clipping bounds the elements of a tensor in the range of [-threshold, +threshold] and is applied to the input of activations. No clip if not specified.</dd>
+<dd></dd>
 <dt><tt>direction</tt> : string</dt>
-<dd>Specify if the RNN is forward, reverse, or bidirectional. Must be one of forward (default), reverse, or bidirectional.</dd>
+<dd></dd>
 <dt><tt>hidden_size</tt> : int</dt>
-<dd>Number of neurons in the hidden layer</dd>
+<dd></dd>
 <dt><tt>linear_before_reset</tt> : int</dt>
-<dd>When computing the output of the hidden gate, apply the linear transformation before multiplying by the output of the reset gate.</dd>
+<dd></dd>
 <dt><tt>output_sequence</tt> : int</dt>
-<dd>The sequence output for the hidden is optional if 0. Default 0.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs (3 - 6)
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>The input sequences packed (and potentially padded) into one 3-D tensor with the shape of `[seq_length, batch_size, input_size]`.</dd>
+<dd></dd>
 <dt><tt>W</tt> : T</dt>
-<dd>The weight tensor for the gates. Concatenation of `W[zrh]` and `WB[zrh]` (if bidirectional) along dimension 0. This tensor has shape `[num_directions, 3*hidden_size, input_size]`.</dd>
+<dd></dd>
 <dt><tt>R</tt> : T</dt>
-<dd>The recurrence weight tensor. Concatenation of `R[zrh]` and `RB[zrh]` (if bidirectional) along dimension 0. This tensor has shape `[num_directions, 3*hidden_size, hidden_size]`.</dd>
+<dd></dd>
 <dt><tt>B</tt> (optional) : T</dt>
-<dd>The bias tensor for the gates. Concatenation of `[Wb[zrh], Rb[zrh]]` and `[WBb[zrh], RBb[zrh]]` (if bidirectional) along dimension 0. This tensor has shape `[num_directions, 6*hidden_size]`. Optional: If not specified - assumed to be 0</dd>
+<dd></dd>
 <dt><tt>sequence_lens</tt> (optional) : T1</dt>
-<dd>Optional tensor specifying lengths of the sequences in a batch. If not specified - assumed all sequences in the batch to have length `seq_length`. It has shape `[batch_size]`.</dd>
+<dd></dd>
 <dt><tt>initial_h</tt> (optional) : T</dt>
-<dd>Optional initial value of the hidden. If not specified - assumed to be 0. It has shape `[num_directions, batch_size, hidden_size]`.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs (0 - 2)
 
 <dl>
 <dt><tt>Y</tt> (optional) : T</dt>
-<dd>A tensor that concats all the intermediate output values of the hidden. It has shape `[seq_length, num_directions, batch_size, hidden_size]`. It is optional if `output_sequence` is 0.</dd>
+<dd></dd>
 <dt><tt>Y_h</tt> (optional) : T</dt>
-<dd>The last output value of the hidden. It has shape `[num_directions, batch_size, hidden_size]`.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 <dt><tt>T1</tt> : tensor(int32)</dt>
-<dd>Constrain seq_lens to integer tensor.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="Gather"></a><a name="gather">**Gather**</a>
-
-  Given `data` tensor of rank r >= 1, and `indices` tensor of rank q, gather
-  entries of the axis dimension of `data` (by default outer-most one as axis=0) indexed by `indices`, and concatenates
-  them in an output tensor of rank q + (r - 1).
-  
-  Example 1:
-    data = [
-        [1.0, 1.2],
-        [2.3, 3.4],
-        [4.5, 5.7],
-    ]
-    indices = [
-        [0, 1],
-        [1, 2],
-    ]
-    output = [
-        [
-            [1.0, 1.2],
-            [2.3, 3.4],
-        ],
-        [
-            [2.3, 3.4],
-            [4.5, 5.7],
-        ],
-    ]
-  
-  Example 2:
-    data = [
-        [1.0, 1.2, 1.9],
-        [2.3, 3.4, 3.9],
-        [4.5, 5.7, 5.9],
-    ]
-    indices = [
-        [0, 2],
-    ]
-    axis = 1,
-    output = [
-        [
-            [1.0, 1.9],
-            [2.3, 3.9],
-            [4.5, 5.9],
-        ],
-    ]
 
 #### Versioning
 
@@ -2145,32 +1898,32 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>Which axis to gather on, defaults to 0. Negative value means counting dimensions from the back. Accepted range in [-r, r-1]</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>Tensor of rank r >= 1.</dd>
+<dd></dd>
 <dt><tt>indices</tt> : Tind</dt>
-<dd>Tensor of int32/int64 indices, of any rank q.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Tensor of rank q + (r - 1).</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 <dt><tt>Tind</tt> : tensor(int32), tensor(int64)</dt>
-<dd>Constrain indices to integer types</dd>
+<dd></dd>
 </dl>
 
 
@@ -2220,15 +1973,6 @@ expect(node, inputs=[data, indices], outputs=[y],
 
 ### <a name="Gemm"></a><a name="gemm">**Gemm**</a>
 
-  General Matrix multiplication:
-  https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms#Level_3
-  Compute Y = alpha * A * B + beta * C, where input tensor A has dimension (M X K)
-  , input tensor B has dimension (K X N), input tensor C and output tensor Y have
-  dimension (M X N).
-  If attribute broadcast is non-zero, input tensor C will be broadcasted to match
-  the dimension requirement. If A can be transposed before doing the computation
-  if attribute transA is non-zero, same for B and transB.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -2243,48 +1987,44 @@ opset_import {
 
 <dl>
 <dt><tt>alpha</tt> : float</dt>
-<dd>Scalar multiplier for the product of input tensors A * B</dd>
+<dd></dd>
 <dt><tt>beta</tt> : float</dt>
-<dd>Scalar multiplier for input tensor C</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Whether C should be broadcasted</dd>
+<dd></dd>
 <dt><tt>transA</tt> : int</dt>
-<dd>Whether A should be transposed</dd>
+<dd></dd>
 <dt><tt>transB</tt> : int</dt>
-<dd>Whether B should be transposed</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>Input tensor A</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>Input tensor B</dd>
+<dd></dd>
 <dt><tt>C</tt> : T</dt>
-<dd>Input tensor C, can be inplace.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="GlobalAveragePool"></a><a name="globalaveragepool">**GlobalAveragePool**</a>
-
-  GlobalAveragePool consumes an input tensor X and applies average pooling across the
-   the values in the same channel. This is equivalent to AveragePool with kernel size
-   equal to the spatial dimension of input tensor.
 
 #### Versioning
 
@@ -2300,21 +2040,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input data tensor from the previous operator; dimensions for image case are (N x C x H x W), where N is the batch size, C is the number of channels, and H and W are the height and the width of the data. For non image case, the dimension are in the form of (N x C x D1 x D2 ... Dn), where N is the batch size.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output data tensor from pooling across the input tensor. Dimensions will be N x C x 1 x 1</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -2364,10 +2104,6 @@ expect(node, inputs=[x], outputs=[y], name='test_globalaveragepool_precomputed')
 
 ### <a name="GlobalLpPool"></a><a name="globallppool">**GlobalLpPool**</a>
 
-  GlobalLpPool consumes an input tensor X and applies lp pool pooling across the
-   the values in the same channel. This is equivalent to LpPool with kernel size
-   equal to the spatial dimension of input tensor.
-
 #### Versioning
 
 This operator is used if you are using version 2 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -2384,36 +2120,32 @@ Other versions of this operator: <a href="Changelog.md#GlobalLpPool-1">GlobalLpP
 
 <dl>
 <dt><tt>p</tt> : int</dt>
-<dd>p value of the Lp norm used to pool over the input data, default is 2.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input data tensor from the previous operator; dimensions for image case are (N x C x H x W), where N is the batch size, C is the number of channels, and H and W are the height and the width of the data. For non image case, the dimension are in the form of (N x C x D1 x D2 ... Dn), where N is the batch size.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output data tensor from pooling across the input tensor. Dimensions will be N x C x 1 x 1</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="GlobalMaxPool"></a><a name="globalmaxpool">**GlobalMaxPool**</a>
-
-  GlobalMaxPool consumes an input tensor X and applies max pooling across the
-   the values in the same channel. This is equivalent to MaxPool with kernel size
-   equal to the spatial dimension of input tensor.
 
 #### Versioning
 
@@ -2429,21 +2161,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input data tensor from the previous operator; dimensions for image case are (N x C x H x W), where N is the batch size, C is the number of channels, and H and W are the height and the width of the data. For non image case, the dimension are in the form of (N x C x D1 x D2 ... Dn), where N is the batch size.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output data tensor from pooling across the input tensor. Dimensions will be N x C x 1 x 1</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -2494,13 +2226,6 @@ expect(node, inputs=[x], outputs=[y], name='test_globalmaxpool_precomputed')
 
 ### <a name="Greater"></a><a name="greater">**Greater**</a>
 
-  Returns the tensor resulted from performing the `greater` logical operation
-  elementwise on the input tensors `A` and `B`.
-  
-  If broadcasting is enabled, the right-hand-side argument will be broadcasted
-  to match the shape of left-hand-side argument. See the doc of `Add` for a
-  detailed description of the broadcasting rules.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -2515,34 +2240,34 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>If set, defines the broadcast dimensions.</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Enable broadcasting</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>Left input tensor for the logical operator.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>Right input tensor for the logical operator.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>C</tt> : T1</dt>
-<dd>Result tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrains input to float tensors.</dd>
+<dd></dd>
 <dt><tt>T1</tt> : tensor(bool)</dt>
-<dd>Constrains output to boolean tensor.</dd>
+<dd></dd>
 </dl>
 
 
@@ -2591,10 +2316,6 @@ expect(node, inputs=[x, y], outputs=[z],
 
 ### <a name="HardSigmoid"></a><a name="hardsigmoid">**HardSigmoid**</a>
 
-  HardSigmoid takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the HardSigmoid function, y = max(0, min(1, alpha * x + beta)),
-  is applied to the tensor elementwise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -2609,30 +2330,30 @@ opset_import {
 
 <dl>
 <dt><tt>alpha</tt> : float</dt>
-<dd>Value of alpha default to 0.2</dd>
+<dd></dd>
 <dt><tt>beta</tt> : float</dt>
-<dd>Value of beta default to 0.5</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -2686,22 +2407,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Hardmax"></a><a name="hardmax">**Hardmax**</a>
 
-  The operator computes the hardmax (1 for the first maximum value, and 0 for all others) values for each layer in the batch
-   of the given input. The input is a 2-D tensor (Tensor<float>) of size
-  (batch_size x input_feature_dimensions). The output tensor has the same shape
-  and contains the hardmax values of the corresponding input.
-  
-  X does not need to explicitly be a 2D vector; rather, it will be
-  coerced into one. For an arbitrary n-dimensional tensor
-  X \in [a_0, a_1, ..., a_{k-1}, a_k, ..., a_{n-1}] and k is
-  the axis provided, then X will be coerced into a 2-dimensional tensor with
-  dimensions [a_0 * ... * a_{k-1}, a_k * ... * a_{n-1}]. For the default
-  case where axis=1, this means the X tensor will be coerced into a 2D tensor
-  of dimensions [a_0, a_1 * ... * a_{n-1}], where a_0 is often the batch size.
-  In this situation, we must have a_0 = N and a_1 * ... * a_{n-1} = D.
-  Each of these dimensions must be matched correctly, or else the operator
-  will throw errors.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -2716,28 +2421,28 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>(int) default to 1; describes the axis of the inputs when coerced to 2D; defaults to one because the 0th axis most likely describes the batch_size</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>The input tensor that's coerced into a 2D matrix of size (NxD) as described above.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>The output values with the same shape as input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -2821,13 +2526,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="InstanceNormalization"></a><a name="instancenormalization">**InstanceNormalization**</a>
 
-  Carries out instance normalization as described in the paper
-  https://arxiv.org/abs/1607.08022.
-  
-  y = scale * (x - mean) / sqrt(variance + epsilon) + B,
-  where mean and variance are computed per instance per channel.
-  
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -2842,40 +2540,36 @@ opset_import {
 
 <dl>
 <dt><tt>epsilon</tt> : float</dt>
-<dd>The epsilon value to use to avoid division by zero, default is 1e-5f.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>The input 4-dimensional tensor of shape NCHW.</dd>
+<dd></dd>
 <dt><tt>scale</tt> : T</dt>
-<dd>The input 1-dimensional scale tensor of size C.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>The input 1-dimensional bias tensor of size C.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>The output 4-dimensional tensor of the same shape as input.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="LRN"></a><a name="lrn">**LRN**</a>
-
-  Local Response Normalization. It normalizes over local input regions.
-  Each input value is divided by
-  (bias+(alpha/size)*sum(xi^2 for every xi in the local region))^beta.
 
 #### Versioning
 
@@ -2891,119 +2585,38 @@ opset_import {
 
 <dl>
 <dt><tt>alpha</tt> : float (required)</dt>
-<dd>Scaling parameter</dd>
+<dd></dd>
 <dt><tt>beta</tt> : float (required)</dt>
-<dd>The exponent</dd>
+<dd></dd>
 <dt><tt>bias</tt> : float</dt>
-<dd>Default to 1.f</dd>
+<dd></dd>
 <dt><tt>size</tt> : int (required)</dt>
-<dd>The number of channels to sum over</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output  types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="LSTM"></a><a name="lstm">**LSTM**</a>
-
-  Computes an one-layer LSTM. This operator is usually supported via some
-  custom implementation such as CuDNN.
-  
-  Notations:
-  
-  `X` - input tensor
-  
-  `i` - input gate
-  
-  `o` - output gate
-  
-  `f` - forget gate
-  
-  `c` - cell gate
-  
-  `t` - time step (t-1 means previous time step)
-  
-  `W[iofc]` - W parameter weight matrix for input, output, forget, and cell gates
-  
-  `R[iofc]` - R recurrence weight matrix for input, output, forget, and cell gates
-  
-  `Wb[iofc]` - W bias vectors for input, output, forget, and cell gates
-  
-  `Rb[iofc]` - R bias vectors for input, output, forget, and cell gates
-  
-  `P[iof]`  - P peephole weight vector for input, output, and forget gates
-  
-  `WB[iofc]` - W parameter weight matrix for backward input, output, forget, and cell gates
-  
-  `RB[iofc]` - R recurrence weight matrix for backward input, output, forget, and cell gates
-  
-  `WBb[iofc]` - W bias vectors for backward input, output, forget, and cell gates
-  
-  `RBb[iofc]` - R bias vectors for backward input, output, forget, and cell gates
-  
-  `PB[iof]`  - P peephole weight vector for backward input, output, and forget gates
-  
-  `H` - Hidden state
-  
-  `num_directions` - 2 if direction == bidirectional else 1
-  
-  Activation functions:
-  
-    Relu(x)                - max(0, x)
-  
-    Tanh(x)                - (1 - e^{-2x})/(1 + e^{-2x})
-  
-    Sigmoid(x)             - 1/(1 + e^{-x})
-  
-    (NOTE: Below are optional)
-  
-    Affine(x)              - alpha*x + beta
-  
-    LeakyRelu(x)           - x if x >= 0 else alpha * x
-  
-    ThresholdedRelu(x)     - x if x >= alpha else 0
-  
-    ScaledTanh(x)          - alpha*Tanh(beta*x)
-  
-    HardSigmoid(x)         - min(max(alpha*x + beta, 0), 1)
-  
-    Elu(x)                 - x if x >= 0 else alpha*(e^x - 1)
-  
-    Softsign(x)            - x/(1 + |x|)
-  
-    Softplus(x)            - log(1 + e^x)
-  
-  Equations (Default: f=Sigmoid, g=Tanh, h=Tanh):
-  
-    - it = f(Xt*(Wi^T) + Ht-1*Ri + Pi (.) Ct-1 + Wbi + Rbi)
-  
-    - ft = f(Xt*(Wf^T) + Ht-1*Rf + Pf (.) Ct-1 + Wbf + Rbf)
-  
-    - ct = g(Xt*(Wc^T) + Ht-1*Rc + Wbc + Rbc)
-  
-    - Ct = ft (.) Ct-1 + it (.) ct
-  
-    - ot = f(Xt*(Wo^T) + Ht-1*Ro + Po (.) Ct + Wbo + Rbo)
-  
-    - Ht = ot (.) h(Ct)
 
 #### Versioning
 
@@ -3019,70 +2632,66 @@ opset_import {
 
 <dl>
 <dt><tt>activation_alpha</tt> : list of floats</dt>
-<dd>Optional scaling values used by some activation functions. The values are consumed in the order of activation functions, for example (f, g, h) in LSTM.</dd>
+<dd></dd>
 <dt><tt>activation_beta</tt> : list of floats</dt>
-<dd>Optional scaling values used by some activation functions. The values are consumed in the order of activation functions, for example (f, g, h) in LSTM.</dd>
+<dd></dd>
 <dt><tt>activations</tt> : list of strings</dt>
-<dd>A list of 3 (or 6 if bidirectional) activation functions for input, output, forget, cell, and hidden. The activation functions must be one of the activation functions specified above. Optional: See the equations for default if not specified.</dd>
+<dd></dd>
 <dt><tt>clip</tt> : float</dt>
-<dd>Cell clip threshold. Clipping bounds the elements of a tensor in the range of [-threshold, +threshold] and is applied to the input of activations. No clip if not specified.</dd>
+<dd></dd>
 <dt><tt>direction</tt> : string</dt>
-<dd>Specify if the RNN is forward, reverse, or bidirectional. Must be one of forward (default), reverse, or bidirectional.</dd>
+<dd></dd>
 <dt><tt>hidden_size</tt> : int</dt>
-<dd>Number of neurons in the hidden layer</dd>
+<dd></dd>
 <dt><tt>input_forget</tt> : int</dt>
-<dd>Couple the input and forget gates if 1, default 0.</dd>
+<dd></dd>
 <dt><tt>output_sequence</tt> : int</dt>
-<dd>The sequence output for the hidden is optional if 0. Default 0.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs (3 - 8)
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>The input sequences packed (and potentially padded) into one 3-D tensor with the shape of `[seq_length, batch_size, input_size]`.</dd>
+<dd></dd>
 <dt><tt>W</tt> : T</dt>
-<dd>The weight tensor for the gates. Concatenation of `W[iofc]` and `WB[iofc]` (if bidirectional) along dimension 0. The tensor has shape `[num_directions, 4*hidden_size, input_size]`.</dd>
+<dd></dd>
 <dt><tt>R</tt> : T</dt>
-<dd>The recurrence weight tensor. Concatenation of `R[iofc]` and `RB[iofc]` (if bidirectional) along dimension 0. This tensor has shape `[num_directions, 4*hidden_size, hidden_size]`.</dd>
+<dd></dd>
 <dt><tt>B</tt> (optional) : T</dt>
-<dd>The bias tensor for input gate. Concatenation of `[Wb[iofc], Rb[iofc]]`, and `[WBb[iofc], RBb[iofc]]` (if bidirectional) along dimension 0. This tensor has shape `[num_directions, 8*hidden_size]`. Optional: If not specified - assumed to be 0.</dd>
+<dd></dd>
 <dt><tt>sequence_lens</tt> (optional) : T1</dt>
-<dd>Optional tensor specifying lengths of the sequences in a batch. If not specified - assumed all sequences in the batch to have length `seq_length`. It has shape `[batch_size]`.</dd>
+<dd></dd>
 <dt><tt>initial_h</tt> (optional) : T</dt>
-<dd>Optional initial value of the hidden. If not specified - assumed to be 0. It has shape `[num_directions, batch_size, hidden_size]`.</dd>
+<dd></dd>
 <dt><tt>initial_c</tt> (optional) : T</dt>
-<dd>Optional initial value of the cell. If not specified - assumed to be 0. It has shape `[num_directions, batch_size, hidden_size]`.</dd>
+<dd></dd>
 <dt><tt>P</tt> (optional) : T</dt>
-<dd>The weight tensor for peepholes. Concatenation of `P[iof]` and `PB[iof]` (if bidirectional) along dimension 0. It has shape `[num_directions, 3*hidde_size]`. Optional: If not specified - assumed to be 0.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs (0 - 3)
 
 <dl>
 <dt><tt>Y</tt> (optional) : T</dt>
-<dd>A tensor that concats all the intermediate output values of the hidden. It has shape `[seq_length, num_directions, batch_size, hidden_size]`. It is optional if `output_sequence` is 0.</dd>
+<dd></dd>
 <dt><tt>Y_h</tt> (optional) : T</dt>
-<dd>The last output value of the hidden. It has shape `[num_directions, batch_size, hidden_size]`.</dd>
+<dd></dd>
 <dt><tt>Y_c</tt> (optional) : T</dt>
-<dd>The last output value of the cell. It has shape `[num_directions, batch_size, hidden_size]`.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 <dt><tt>T1</tt> : tensor(int32)</dt>
-<dd>Constrain seq_lens to integer tensor.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="LeakyRelu"></a><a name="leakyrelu">**LeakyRelu**</a>
-
-  LeakyRelu takes input data (Tensor<T>) and an argument alpha, and produces one
-  output data (Tensor<T>) where the function `f(x) = alpha * x for x < 0`,
-  `f(x) = x for x >= 0`, is applied to the data tensor elementwise.
 
 #### Versioning
 
@@ -3098,28 +2707,28 @@ opset_import {
 
 <dl>
 <dt><tt>alpha</tt> : float</dt>
-<dd>Coefficient of leakage default to 0.01.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -3172,13 +2781,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Less"></a><a name="less">**Less**</a>
 
-  Returns the tensor resulted from performing the `less` logical operation
-  elementwise on the input tensors `A` and `B`.
-  
-  If broadcasting is enabled, the right-hand-side argument will be broadcasted
-  to match the shape of left-hand-side argument. See the doc of `Add` for a
-  detailed description of the broadcasting rules.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -3193,34 +2795,34 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>If set, defines the broadcast dimensions.</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Enable broadcasting</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>Left input tensor for the logical operator.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>Right input tensor for the logical operator.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>C</tt> : T1</dt>
-<dd>Result tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrains input to float tensors.</dd>
+<dd></dd>
 <dt><tt>T1</tt> : tensor(bool)</dt>
-<dd>Constrains output to boolean tensor.</dd>
+<dd></dd>
 </dl>
 
 
@@ -3269,8 +2871,6 @@ expect(node, inputs=[x, y], outputs=[z],
 
 ### <a name="Log"></a><a name="log">**Log**</a>
 
-  Calculates the natural log of the given input tensor, element-wise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -3285,21 +2885,21 @@ opset_import {
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>The natural log of the input tensor computed element-wise</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -3331,22 +2931,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="LogSoftmax"></a><a name="logsoftmax">**LogSoftmax**</a>
 
-  The operator computes the logsoftmax (log of softmax) values for each layer in the batch
-   of the given input. The input is a 2-D tensor (Tensor<float>) of size
-  (batch_size x input_feature_dimensions). The output tensor has the same shape
-  and contains the logsoftmax values of the corresponding input.
-  
-  X does not need to explicitly be a 2D vector; rather, it will be
-  coerced into one. For an arbitrary n-dimensional tensor
-  X \in [a_0, a_1, ..., a_{k-1}, a_k, ..., a_{n-1}] and k is
-  the axis provided, then X will be coerced into a 2-dimensional tensor with
-  dimensions [a_0 * ... * a_{k-1}, a_k * ... * a_{n-1}]. For the default
-  case where axis=1, this means the X tensor will be coerced into a 2D tensor
-  of dimensions [a_0, a_1 * ... * a_{n-1}], where a_0 is often the batch size.
-  In this situation, we must have a_0 = N and a_1 * ... * a_{n-1} = D.
-  Each of these dimensions must be matched correctly, or else the operator
-  will throw errors.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -3361,28 +2945,28 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>(int) default to 1; describes the axis of the inputs when coerced to 2D; defaults to one because the 0th axis most likely describes the batch_size</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>The input tensor that's coerced into a 2D matrix of size (NxD) as described above.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>The output values with the same shape as input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -3474,8 +3058,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="LpNormalization"></a><a name="lpnormalization">**LpNormalization**</a>
 
-  Given a matrix, apply Lp-normalization along the provided axis.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -3490,40 +3072,34 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>(int64, default -1) the axis on which to apply normalization, -1 mean last axis.</dd>
+<dd></dd>
 <dt><tt>p</tt> : int</dt>
-<dd>(int64, default 2) the order of the normalization, only 1 or 2 are supported.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input matrix</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Matrix after normalization</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="LpPool"></a><a name="lppool">**LpPool**</a>
-
-  LpPool consumes an input tensor X and applies Lp pooling across the
-   the tensor according to kernel sizes, stride sizes, and pad lengths.
-   Lp pooling consisting of computing the Lp norm on all values of a subset
-   of the input tensor according to the kernel size and downsampling the
-   data into the output tensor Y for further processing.
 
 #### Versioning
 
@@ -3541,42 +3117,40 @@ Other versions of this operator: <a href="Changelog.md#LpPool-1">LpPool-1</a>
 
 <dl>
 <dt><tt>auto_pad</tt> : string</dt>
-<dd>auto_pad must be either SAME_UPPER, SAME_LOWER or VALID. Where SAME_UPPER or SAME_LOWER mean pad the input so that the output size match the input.In case of odd number add the extra padding at the end for SAME_UPPER and at the beginning for SAME_LOWER. VALID mean no padding. DEPRECATION NOTE: auto_pad is only intended to support legacy uses, and for framework authors, one is explicitly encouraged to use explicit padding specified in the pads attribute.</dd>
+<dd></dd>
 <dt><tt>kernel_shape</tt> : list of ints (required)</dt>
-<dd>The size of the kernel along each axis.</dd>
+<dd></dd>
 <dt><tt>p</tt> : int</dt>
-<dd>p value of the Lp norm used to pool over the input data, default is 2.</dd>
+<dd></dd>
 <dt><tt>pads</tt> : list of ints</dt>
-<dd>Padding for the beginning and ending along each axis, it can take any value greater than or equal to 0. The value represent the number of pixels added to the beginning and end part of the corresponding axis. `pads` format should be as follow [x1_begin, x2_begin...x1_end, x2_end,...], where xi_begin the number of pixels added at the beginning of axis `i` and xi_end, the number of pixels added at the end of axis `i`. This attribute cannot be used simultaneously with auto_pad attribute. If not present, the padding defaults to 0 along start and end of each axis.</dd>
+<dd></dd>
 <dt><tt>strides</tt> : list of ints</dt>
-<dd>Stride along each axis. If not present, the stride defaults to 0 along each axis.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input data tensor from the previous operator; dimensions for image case are (N x C x H x W), where N is the batch size, C is the number of channels, and H and W are the height and the width of the data. For non image case, the dimension are in the form of (N x C x D1 x D2 ... Dn), where N is the batch size.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output data tensor from Lp pooling across the input tensor. Dimensions will vary based on various kernel, stride, and pad sizes.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="MatMul"></a><a name="matmul">**MatMul**</a>
-
-  Matrix product that behaves like numpy.matmul: https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.matmul.html
 
 #### Versioning
 
@@ -3592,23 +3166,23 @@ opset_import {
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>N-dimensional matrix A</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>N-dimensional matrix B</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Matrix multiply results from A * B</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -3651,9 +3225,6 @@ expect(node, inputs=[a, b], outputs=[c],
 
 ### <a name="Max"></a><a name="max">**Max**</a>
 
-  Element-wise max of each of the input tensors. All inputs and outputs must
-  have the same shape and data type.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -3668,21 +3239,21 @@ opset_import {
 
 <dl>
 <dt><tt>data_0</tt> (variadic) : T</dt>
-<dd>List of tensors for Max.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>max</tt> : T</dt>
-<dd>Output tensor. Same dimension as inputs.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -3727,12 +3298,6 @@ expect(node, inputs=[data_0, data_1], outputs=[result],
 
 ### <a name="MaxPool"></a><a name="maxpool">**MaxPool**</a>
 
-  MaxPool consumes an input tensor X and applies max pooling across the
-   the tensor according to kernel sizes, stride sizes, and pad lengths.
-   max pooling consisting of computing the max on all values of a
-   subset of the input tensor according to the kernel size and downsampling the
-   data into the output tensor Y for further processing.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -3747,42 +3312,38 @@ opset_import {
 
 <dl>
 <dt><tt>auto_pad</tt> : string</dt>
-<dd>auto_pad must be either SAME_UPPER, SAME_LOWER or VALID. Where SAME_UPPER or SAME_LOWER mean pad the input so that the output size match the input.In case of odd number add the extra padding at the end for SAME_UPPER and at the beginning for SAME_LOWER. VALID mean no padding. DEPRECATION NOTE: auto_pad is only intended to support legacy uses, and for framework authors, one is explicitly encouraged to use explicit padding specified in the pads attribute.</dd>
+<dd></dd>
 <dt><tt>kernel_shape</tt> : list of ints (required)</dt>
-<dd>The size of the kernel along each axis.</dd>
+<dd></dd>
 <dt><tt>pads</tt> : list of ints</dt>
-<dd>Padding for the beginning and ending along each axis, it can take any value greater than or equal to 0. The value represent the number of pixels added to the beginning and end part of the corresponding axis. `pads` format should be as follow [x1_begin, x2_begin...x1_end, x2_end,...], where xi_begin the number of pixels added at the beginning of axis `i` and xi_end, the number of pixels added at the end of axis `i`. This attribute cannot be used simultaneously with auto_pad attribute. If not present, the padding defaults to 0 along start and end of each axis.</dd>
+<dd></dd>
 <dt><tt>strides</tt> : list of ints</dt>
-<dd>Stride along each axis. If not present, the stride defaults to 1 along each axis.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input data tensor from the previous operator; dimensions for image case are (N x C x H x W), where N is the batch size, C is the number of channels, and H and W are the height and the width of the data. For non image case, the dimension are in the form of (N x C x D1 x D2 ... Dn), where N is the batch size.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output data tensor from average or max pooling across the input tensor. Dimensions will vary based on various kernel, stride, and pad sizes. Floor value of the dimension is used</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="MaxRoiPool"></a><a name="maxroipool">**MaxRoiPool**</a>
-
-  ROI max pool consumes an input tensor X and region of interests (RoIs) to
-   apply max pooling across each RoI, to produce output 4-D tensor of shape
-   (num_rois, channels, pooled_shape[0], pooled_shape[1]).
 
 #### Versioning
 
@@ -3798,39 +3359,36 @@ opset_import {
 
 <dl>
 <dt><tt>pooled_shape</tt> : list of ints (required)</dt>
-<dd>ROI pool output shape (height, width).</dd>
+<dd></dd>
 <dt><tt>spatial_scale</tt> : float</dt>
-<dd>Multiplicative spatial scale factor to translate ROI coordinates from their input scale to the scale used when pooling, default is 1.0f.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input data tensor from the previous operator; dimensions for image case are (N x C x H x W), where N is the batch size, C is the number of channels, and H and W are the height and the width of the data.</dd>
+<dd></dd>
 <dt><tt>rois</tt> : T</dt>
-<dd>RoIs (Regions of Interest) to pool over. Should be a 2-D tensor of shape (num_rois, 5) given as [[batch_id, x1, y1, x2, y2], ...].</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>RoI pooled output 4-D tensor of shape (num_rois, channels, pooled_shape[0], pooled_shape[1]).</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="Mean"></a><a name="mean">**Mean**</a>
-
-  Element-wise mean of each of the input tensors. All inputs and outputs must
-  have the same shape and data type.
 
 #### Versioning
 
@@ -3846,21 +3404,21 @@ opset_import {
 
 <dl>
 <dt><tt>data_0</tt> (variadic) : T</dt>
-<dd>List of tensors for Mean.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>mean</tt> : T</dt>
-<dd>Output tensor. Same dimension as inputs.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -3905,9 +3463,6 @@ expect(node, inputs=[data_0, data_1], outputs=[result],
 
 ### <a name="Min"></a><a name="min">**Min**</a>
 
-  Element-wise min of each of the input tensors. All inputs and outputs must
-  have the same shape and data type.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -3922,21 +3477,21 @@ opset_import {
 
 <dl>
 <dt><tt>data_0</tt> (variadic) : T</dt>
-<dd>List of tensors for Min</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>min</tt> : T</dt>
-<dd>Output tensor. Same dimension as inputs.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -3981,25 +3536,6 @@ expect(node, inputs=[data_0, data_1], outputs=[result],
 
 ### <a name="Mul"></a><a name="mul">**Mul**</a>
 
-  Performs element-wise binary multiplication (with limited broadcast support).
-  
-  If necessary the right-hand-side argument will be broadcasted to match the
-  shape of left-hand-side argument. When broadcasting is specified, the second
-  tensor can either be of size 1 (a scalar value), or having its shape as a
-  contiguous subset of the first tensor's shape. The starting of the mutually
-  equal shape is specified by the argument "axis", and if it is not set, suffix
-  matching is assumed. 1-dim expansion doesn't work yet.
-  
-  For example, the following tensor shapes are supported (with broadcast=1):
-  
-    shape(A) = (2, 3, 4, 5), shape(B) = (,), i.e. B is a scalar
-    shape(A) = (2, 3, 4, 5), shape(B) = (5,)
-    shape(A) = (2, 3, 4, 5), shape(B) = (4, 5)
-    shape(A) = (2, 3, 4, 5), shape(B) = (3, 4), with axis=1
-    shape(A) = (2, 3, 4, 5), shape(B) = (2), with axis=0
-  
-  Attribute `broadcast=1` needs to be passed to enable broadcasting.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -4014,32 +3550,32 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>If set, defines the broadcast dimensions. See doc for details.</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Pass 1 to enable broadcasting</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>First operand, should share the type with the second operand.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>Second operand. With broadcasting can be of smaller size than A. If broadcasting is disabled it should be of the same size.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>C</tt> : T</dt>
-<dd>Result, has same dimensions and type as A</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -4094,10 +3630,6 @@ expect(node, inputs=[x, y], outputs=[z],
 
 ### <a name="Neg"></a><a name="neg">**Neg**</a>
 
-  Neg takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where each element flipped sign, y = -x, is applied to
-  the tensor elementwise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -4112,21 +3644,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -4158,8 +3690,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Not"></a><a name="not">**Not**</a>
 
-  Returns the negation of the input tensor element-wise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -4174,21 +3704,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(bool)</dt>
-<dd>Constrains input/output to boolean tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -4225,13 +3755,6 @@ expect(node, inputs=[x], outputs=[np.logical_not(x)],
 
 ### <a name="Or"></a><a name="or">**Or**</a>
 
-  Returns the tensor resulted from performing the `or` logical operation
-  elementwise on the input tensors `A` and `B`.
-  
-  If broadcasting is enabled, the right-hand-side argument will be broadcasted
-  to match the shape of left-hand-side argument. See the doc of `Add` for a
-  detailed description of the broadcasting rules.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -4246,34 +3769,34 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>If set, defines the broadcast dimensions.</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Enable broadcasting</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>Left input tensor for the logical operator.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>Right input tensor for the logical operator.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>C</tt> : T1</dt>
-<dd>Result tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(bool)</dt>
-<dd>Constrains input to boolean tensor.</dd>
+<dd></dd>
 <dt><tt>T1</tt> : tensor(bool)</dt>
-<dd>Constrains output to boolean tensor.</dd>
+<dd></dd>
 </dl>
 
 
@@ -4418,11 +3941,6 @@ expect(node, inputs=[x, y], outputs=[z],
 
 ### <a name="PRelu"></a><a name="prelu">**PRelu**</a>
 
-  PRelu takes input data (Tensor<T>) and slope tensor as input, and produces one
-  output data (Tensor<T>) where the function `f(x) = slope * x for x < 0`,
-  `f(x) = x for x >= 0`., is applied to the data tensor elementwise.
-  
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -4437,47 +3955,27 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 <dt><tt>slope</tt> : T</dt>
-<dd>Slope tensor. If `Slope` is of size 1, the value is sharedacross different channels</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="Pad"></a><a name="pad">**Pad**</a>
-
-  Given `data` tensor, pads, mode, and value.
-  
-  Example:
-    Insert 0 pads to the beginning of the second dimension.
-  
-    data = [
-        [1.0, 1.2],
-        [2.3, 3.4],
-        [4.5, 5.7],
-    ]
-    pads = [0, 2, 0, 0]
-  
-    output = [
-        [
-            [0.0, 0.0, 1.0, 1.2],
-            [0.0, 0.0, 2.3, 3.4],
-            [0.0, 0.0, 4.5, 5.7],
-        ],
-    ]
 
 #### Versioning
 
@@ -4495,32 +3993,32 @@ Other versions of this operator: <a href="Changelog.md#Pad-1">Pad-1</a>
 
 <dl>
 <dt><tt>mode</tt> : string</dt>
-<dd>Three modes: constant(default), reflect, edge</dd>
+<dd></dd>
 <dt><tt>pads</tt> : list of ints (required)</dt>
-<dd>List of integers indicate the padding element count at the beginning and end of each axis, for 2D it is the number of pixel. `pads` rank should be double of the input's rank. `pads` format should be as follow [x1_begin, x2_begin...x1_end, x2_end,...], where xi_begin the number of pixels added at the beginning of axis `i` and xi_end, the number of pixels added at the end of axis `i`.</dd>
+<dd></dd>
 <dt><tt>value</tt> : float</dt>
-<dd>One float, indicates the value to be filled, default is 0</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>Input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Tensor after padding.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -4581,27 +4079,6 @@ for mode in ['edge', 'reflect']:
 
 ### <a name="Pow"></a><a name="pow">**Pow**</a>
 
-  Pow takes input data (Tensor<T>) and exponent Tensor, and
-  produces one output data (Tensor<T>) where the function `f(x) = x^exponent`,
-  is applied to the data tensor elementwise.
-  
-  If necessary the right-hand-side argument will be broadcasted to match the
-  shape of left-hand-side argument. When broadcasting is specified, the second
-  tensor can either be of size 1 (a scalar value), or having its shape as a
-  contiguous subset of the first tensor's shape. The starting of the mutually
-  equal shape is specified by the argument "axis", and if it is not set, suffix
-  matching is assumed. 1-dim expansion doesn't work yet.
-  
-  For example, the following tensor shapes are supported (with broadcast=1):
-  
-    shape(A) = (2, 3, 4, 5), shape(B) = (,), i.e. B is a scalar
-    shape(A) = (2, 3, 4, 5), shape(B) = (5,)
-    shape(A) = (2, 3, 4, 5), shape(B) = (4, 5)
-    shape(A) = (2, 3, 4, 5), shape(B) = (3, 4), with axis=1
-    shape(A) = (2, 3, 4, 5), shape(B) = (2), with axis=0
-  
-  Attribute `broadcast=1` needs to be passed to enable broadcasting.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -4616,32 +4093,32 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>If set, defines the broadcast dimensions. See doc for details.</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Pass 1 to enable broadcasting</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor of any shape, base of the exponent.</dd>
+<dd></dd>
 <dt><tt>Y</tt> : T</dt>
-<dd>Input tensor of any shape broadcastable to X shape, the exponent component.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Z</tt> : T</dt>
-<dd>Output tensor (same size as X)</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -4709,67 +4186,6 @@ expect(node, inputs=[x, y], outputs=[z],
 
 ### <a name="RNN"></a><a name="rnn">**RNN**</a>
 
-  Computes an one-layer simple RNN. This operator is usually supported
-  via some custom implementation such as CuDNN.
-  
-  Notations:
-  
-  `X` - input tensor
-  
-  `i` - input gate
-  
-  `t` - time step (t-1 means previous time step)
-  
-  `Wi` - W parameter weight matrix for input gate
-  
-  `Ri` - R recurrence weight matrix for input gate
-  
-  `Wbi` - W parameter bias vector for input gate
-  
-  `Rbi` - R parameter bias vector for input gate
-  
-  `WBi` - W parameter weight matrix for backward input gate
-  
-  `RBi` - R recurrence weight matrix for backward input gate
-  
-  `WBbi` - WR bias vectors for backward input gate
-  
-  `RBbi` - RR bias vectors for backward input gate
-  
-  `H` - Hidden state
-  
-  `num_directions` - 2 if direction == bidirectional else 1
-  
-  Activation functions:
-  
-    Relu(x)                - max(0, x)
-  
-    Tanh(x)                - (1 - e^{-2x})/(1 + e^{-2x})
-  
-    Sigmoid(x)             - 1/(1 + e^{-x})
-  
-    (NOTE: Below are optional)
-  
-    Affine(x)              - alpha*x + beta
-  
-    LeakyRelu(x)           - x if x >= 0 else alpha * x
-  
-    ThresholdedRelu(x)     - x if x >= alpha else 0
-  
-    ScaledTanh(x)          - alpha*Tanh(beta*x)
-  
-    HardSigmoid(x)         - min(max(alpha*x + beta, 0), 1)
-  
-    Elu(x)                 - x if x >= 0 else alpha*(e^x - 1)
-  
-    Softsign(x)            - x/(1 + |x|)
-  
-    Softplus(x)            - log(1 + e^x)
-  
-  Equations (Default: f=Tanh):
-  
-    - Ht = f(Xt*(Wi^T) + Ht-1*Ri + Wbi + Rbi)
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -4784,67 +4200,59 @@ opset_import {
 
 <dl>
 <dt><tt>activation_alpha</tt> : list of floats</dt>
-<dd>Optional scaling values used by some activation functions. The values are consumed in the order of activation functions, for example (f, g, h) in LSTM.</dd>
+<dd></dd>
 <dt><tt>activation_beta</tt> : list of floats</dt>
-<dd>Optional scaling values used by some activation functions. The values are consumed in the order of activation functions, for example (f, g, h) in LSTM.</dd>
+<dd></dd>
 <dt><tt>activations</tt> : list of strings</dt>
-<dd>One (or two if bidirectional) activation function for input gate. The activation function must be one of the activation functions specified above. Optional: Default `Tanh` if not specified.</dd>
+<dd></dd>
 <dt><tt>clip</tt> : float</dt>
-<dd>Cell clip threshold. Clipping bounds the elements of a tensor in the range of [-threshold, +threshold] and is applied to the input of activations. No clip if not specified.</dd>
+<dd></dd>
 <dt><tt>direction</tt> : string</dt>
-<dd>Specify if the RNN is forward, reverse, or bidirectional. Must be one of forward (default), reverse, or bidirectional.</dd>
+<dd></dd>
 <dt><tt>hidden_size</tt> : int</dt>
-<dd>Number of neurons in the hidden layer</dd>
+<dd></dd>
 <dt><tt>output_sequence</tt> : int</dt>
-<dd>The sequence output for the hidden is optional if 0. Default 0.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs (3 - 6)
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>The input sequences packed (and potentially padded) into one 3-D tensor with the shape of `[seq_length, batch_size, input_size]`.</dd>
+<dd></dd>
 <dt><tt>W</tt> : T</dt>
-<dd>The weight tensor for input gate. Concatenation of `Wi` and `WBi` (if bidirectional). The tensor has shape `[num_directions, hidden_size, input_size]`.</dd>
+<dd></dd>
 <dt><tt>R</tt> : T</dt>
-<dd>The recurrence weight tensor. Concatenation of `Ri` and `RBi` (if bidirectional). The tensor has shape `[num_directions, hidden_size, hidden_size]`.</dd>
+<dd></dd>
 <dt><tt>B</tt> (optional) : T</dt>
-<dd>The bias tensor for input gate. Concatenation of `[Wbi, Rbi]` and `[WBbi, RBbi]` (if bidirectional). The tensor has shape `[num_directions, 2*hidden_size]`. Optional: If not specified - assumed to be 0.</dd>
+<dd></dd>
 <dt><tt>sequence_lens</tt> (optional) : T1</dt>
-<dd>Optional tensor specifying lengths of the sequences in a batch. If not specified - assumed all sequences in the batch to have length `seq_length`. It has shape `[batch_size]`.</dd>
+<dd></dd>
 <dt><tt>initial_h</tt> (optional) : T</dt>
-<dd>Optional initial value of the hidden. If not specified - assumed to be 0. It has shape `[num_directions, batch_size, hidden_size]`.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs (0 - 2)
 
 <dl>
 <dt><tt>Y</tt> (optional) : T</dt>
-<dd>A tensor that concats all the intermediate output values of the hidden. It has shape `[seq_length, num_directions, batch_size, hidden_size]`. It is optional if `output_sequence` is 0.</dd>
+<dd></dd>
 <dt><tt>Y_h</tt> (optional) : T</dt>
-<dd>The last output value of the hidden. It has shape `[num_directions, batch_size, hidden_size]`.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 <dt><tt>T1</tt> : tensor(int32)</dt>
-<dd>Constrain seq_lens to integer tensor.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="RandomNormal"></a><a name="randomnormal">**RandomNormal**</a>
 
-  Generate a tensor with random values drawn from a normal distribution. The shape
-  of the tensor is specified by the `shape` argument and the parameter of the normal distribution
-  specified by `mean` and `scale`.
-  
-  The data type is specified by the 'dtype' argument. The 'dtype' argument must
-  be one of the data types specified in the 'DataType' enum field in the
-  TensorProto message.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -4859,15 +4267,15 @@ opset_import {
 
 <dl>
 <dt><tt>dtype</tt> : int</dt>
-<dd>The data type for the elements of the output tensor. Default is TensorProto::FLOAT.</dd>
+<dd></dd>
 <dt><tt>mean</tt> : float</dt>
-<dd>The mean of the normal distribution. If not specified, default is 0.</dd>
+<dd></dd>
 <dt><tt>scale</tt> : float</dt>
-<dd>The standard deviation of the normal distribution. If not specified, default is 1.</dd>
+<dd></dd>
 <dt><tt>seed</tt> : float</dt>
-<dd>(Optional) Seed to the random generator, if not specified we will auto generate one.</dd>
+<dd></dd>
 <dt><tt>shape</tt> : list of ints (required)</dt>
-<dd>The shape of the output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
@@ -4877,27 +4285,19 @@ opset_import {
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Output tensor of random values drawn from normal distribution</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="RandomNormalLike"></a><a name="randomnormallike">**RandomNormalLike**</a>
 
-  Generate a tensor with random values drawn from a normal distribution. The shape
-  of the tensor is computed from the input argument and the parameter of the normal distribution
-  specified by `mean` and `scale`.
-  
-  The data type is specified by the 'dtype' argument. The 'dtype' argument must
-  be one of the data types specified in the 'DataType' enum field in the
-  TensorProto message.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -4912,46 +4312,39 @@ opset_import {
 
 <dl>
 <dt><tt>dtype</tt> : int</dt>
-<dd>(Optional) The data type for the elements of the output tensor, if not specified, we will usethe data type of the input tensor.</dd>
+<dd></dd>
 <dt><tt>mean</tt> : float</dt>
-<dd>The mean of the normal distribution. If not specified, default is 0.</dd>
+<dd></dd>
 <dt><tt>scale</tt> : float</dt>
-<dd>The standard deviation of the normal distribution. If not specified, default is 1.</dd>
+<dd></dd>
 <dt><tt>seed</tt> : float</dt>
-<dd>(Optional) Seed to the random generator, if not specified we will auto generate one.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : tensor(int32)</dt>
-<dd>Input tensor to provide shape information.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Output tensor of random values drawn from normal distribution</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="RandomUniform"></a><a name="randomuniform">**RandomUniform**</a>
 
-  Generate a tensor with random values drawn from a uniform distribution. The shape
-  of the tensor is specified by the `shape` argument and the range by `low` and `high`.
-  
-  The data type is specified by the 'dtype' argument. The 'dtype' argument must
-  be one of the data types specified in the 'DataType' enum field in the
-  TensorProto message.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -4966,15 +4359,15 @@ opset_import {
 
 <dl>
 <dt><tt>dtype</tt> : int</dt>
-<dd>The data type for the elements of the output tensor. If not specified, default is TensorProto::FLOAT.</dd>
+<dd></dd>
 <dt><tt>high</tt> : float</dt>
-<dd>Upper boundary of the output values. If not specified, default is 1.</dd>
+<dd></dd>
 <dt><tt>low</tt> : float</dt>
-<dd>Lower boundary of the output values. If not specified, default is 0.</dd>
+<dd></dd>
 <dt><tt>seed</tt> : float</dt>
-<dd>(Optional) Seed to the random generator, if not specified we will auto generate one.</dd>
+<dd></dd>
 <dt><tt>shape</tt> : list of ints (required)</dt>
-<dd>The shape of the output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
@@ -4984,25 +4377,18 @@ opset_import {
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Output tensor of random values drawn from uniform distribution</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="RandomUniformLike"></a><a name="randomuniformlike">**RandomUniformLike**</a>
-
-  Generate a tensor with random values drawn from a uniform distribution. The shape
-  of the tensor is computed from the input argument and the range by `low` and `high`.
-  
-  The data type is specified by the 'dtype' argument. The 'dtype' argument must
-  be one of the data types specified in the 'DataType' enum field in the
-  TensorProto message.
 
 #### Versioning
 
@@ -5018,42 +4404,38 @@ opset_import {
 
 <dl>
 <dt><tt>dtype</tt> : int</dt>
-<dd>(Optional) The data type for the elements of the output tensor, if not specified, we will usethe data type of the input tensor.</dd>
+<dd></dd>
 <dt><tt>high</tt> : float</dt>
-<dd>Upper boundary of the output values. If not specified, default is 1.</dd>
+<dd></dd>
 <dt><tt>low</tt> : float</dt>
-<dd>Lower boundary of the output values. If not specified, default is 0.</dd>
+<dd></dd>
 <dt><tt>seed</tt> : float</dt>
-<dd>(Optional) Seed to the random generator, if not specified we will auto generate one.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : tensor(int32)</dt>
-<dd>Input tensor to provide shape information.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Output tensor of random values drawn from uniform distribution</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="Reciprocal"></a><a name="reciprocal">**Reciprocal**</a>
-
-  Reciprocal takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the reciprocal is, y = 1/x, is applied to
-  the tensor elementwise.
 
 #### Versioning
 
@@ -5069,21 +4451,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -5115,13 +4497,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="ReduceL1"></a><a name="reducel1">**ReduceL1**</a>
 
-  Computes the L1 norm of the input tensor's element along the provided axes. The resulted
-  tensor has the same rank as the input if keepdims equal 1. If keepdims equal 0, then
-  the resulted tensor have the reduced dimension pruned.
-  
-  The above behavior is similar to numpy, with the exception that numpy default keepdims to
-  False instead of True.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5136,42 +4511,35 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints</dt>
-<dd>A list of integers, along which to reduce.</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : T</dt>
-<dd>Reduced output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="ReduceL2"></a><a name="reducel2">**ReduceL2**</a>
 
-  Computes the L2 norm of the input tensor's element along the provided axes. The resulted
-  tensor has the same rank as the input if keepdims equal 1. If keepdims equal 0, then
-  the resulted tensor have the reduced dimension pruned.
-  
-  The above behavior is similar to numpy, with the exception that numpy default keepdims to
-  False instead of True.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5186,42 +4554,35 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints</dt>
-<dd>A list of integers, along which to reduce.</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : T</dt>
-<dd>Reduced output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="ReduceLogSum"></a><a name="reducelogsum">**ReduceLogSum**</a>
 
-  Computes the log sum of the input tensor's element along the provided axes. The resulted
-  tensor has the same rank as the input if keepdims equal 1. If keepdims equal 0, then
-  the resulted tensor have the reduced dimension pruned.
-  
-  The above behavior is similar to numpy, with the exception that numpy default keepdims to
-  False instead of True.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5236,42 +4597,35 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints</dt>
-<dd>A list of integers, along which to reduce.</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : T</dt>
-<dd>Reduced output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="ReduceLogSumExp"></a><a name="reducelogsumexp">**ReduceLogSumExp**</a>
 
-  Computes the log sum exponent of the input tensor's element along the provided axes. The resulted
-  tensor has the same rank as the input if keepdims equal 1. If keepdims equal 0, then
-  the resulted tensor have the reduced dimension pruned.
-  
-  The above behavior is similar to numpy, with the exception that numpy default keepdims to
-  False instead of True.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5286,42 +4640,35 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints</dt>
-<dd>A list of integers, along which to reduce.</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : T</dt>
-<dd>Reduced output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="ReduceMax"></a><a name="reducemax">**ReduceMax**</a>
 
-  Computes the max of the input tensor's element along the provided axes. The resulted
-  tensor has the same rank as the input if keepdims equal 1. If keepdims equal 0, then
-  the resulted tensor have the reduced dimension pruned.
-  
-  The above behavior is similar to numpy, with the exception that numpy default keepdims to
-  False instead of True.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5336,42 +4683,35 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints</dt>
-<dd>A list of integers, along which to reduce.</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : T</dt>
-<dd>Reduced output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="ReduceMean"></a><a name="reducemean">**ReduceMean**</a>
 
-  Computes the mean of the input tensor's element along the provided axes. The resulted
-  tensor has the same rank as the input if keepdims equal 1. If keepdims equal 0, then
-  the resulted tensor have the reduced dimension pruned.
-  
-  The above behavior is similar to numpy, with the exception that numpy default keepdims to
-  False instead of True.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5386,42 +4726,35 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints</dt>
-<dd>A list of integers, along which to reduce.</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : T</dt>
-<dd>Reduced output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="ReduceMin"></a><a name="reducemin">**ReduceMin**</a>
 
-  Computes the min of the input tensor's element along the provided axes. The resulted
-  tensor has the same rank as the input if keepdims equal 1. If keepdims equal 0, then
-  the resulted tensor have the reduced dimension pruned.
-  
-  The above behavior is similar to numpy, with the exception that numpy default keepdims to
-  False instead of True.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5436,42 +4769,35 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints</dt>
-<dd>A list of integers, along which to reduce.</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : T</dt>
-<dd>Reduced output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="ReduceProd"></a><a name="reduceprod">**ReduceProd**</a>
 
-  Computes the product of the input tensor's element along the provided axes. The resulted
-  tensor has the same rank as the input if keepdims equal 1. If keepdims equal 0, then
-  the resulted tensor have the reduced dimension pruned.
-  
-  The above behavior is similar to numpy, with the exception that numpy default keepdims to
-  False instead of True.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5486,42 +4812,35 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints</dt>
-<dd>A list of integers, along which to reduce.</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : T</dt>
-<dd>Reduced output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="ReduceSum"></a><a name="reducesum">**ReduceSum**</a>
 
-  Computes the sum of the input tensor's element along the provided axes. The resulted
-  tensor has the same rank as the input if keepdims equal 1. If keepdims equal 0, then
-  the resulted tensor have the reduced dimension pruned.
-  
-  The above behavior is similar to numpy, with the exception that numpy default keepdims to
-  False instead of True.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5536,42 +4855,35 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints</dt>
-<dd>A list of integers, along which to reduce.</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : T</dt>
-<dd>Reduced output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="ReduceSumSquare"></a><a name="reducesumsquare">**ReduceSumSquare**</a>
 
-  Computes the sum square of the input tensor's element along the provided axes. The resulted
-  tensor has the same rank as the input if keepdims equal 1. If keepdims equal 0, then
-  the resulted tensor have the reduced dimension pruned.
-  
-  The above behavior is similar to numpy, with the exception that numpy default keepdims to
-  False instead of True.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5586,38 +4898,34 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints</dt>
-<dd>A list of integers, along which to reduce.</dd>
+<dd></dd>
 <dt><tt>keepdims</tt> : int</dt>
-<dd>Keep the reduced dimension or not, default 1 mean keep reduced dimension.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reduced</tt> : T</dt>
-<dd>Reduced output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="Relu"></a><a name="relu">**Relu**</a>
-
-  Relu takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the rectified linear function, y = max(0, x), is applied to
-  the tensor elementwise.
 
 #### Versioning
 
@@ -5633,21 +4941,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -5674,15 +4982,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Reshape"></a><a name="reshape">**Reshape**</a>
 
-  Reshape the input tensor similar to numpy.reshape.
-  
-  First input is the data tensor, second input is a shape tensor which specifies the output shape. It outputs the reshaped tensor.
-  
-  At most one dimension of the new shape can be -1. In this case, the value is
-  inferred from the size of the tensor and the remaining dimensions. A dimension
-  could also be 0, in which case the actual dimension value is unchanged (i.e. taken
-  from the input tensor).
-
 #### Versioning
 
 This operator is used if you are using version 5 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5699,23 +4998,23 @@ Other versions of this operator: <a href="Changelog.md#Reshape-1">Reshape-1</a>
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 <dt><tt>shape</tt> : tensor(int64)</dt>
-<dd>Specified shape for output.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>reshaped</tt> : T</dt>
-<dd>Reshaped data.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -5752,11 +5051,6 @@ for test_name, shape in test_cases.items():
 
 ### <a name="Selu"></a><a name="selu">**Selu**</a>
 
-  Selu takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the scaled exponential linear unit function,
-  `y = gamma * (alpha * e^x - alpha) for x <= 0`, `y = gamma * x for x > 0`,
-  is applied to the tensor elementwise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5771,30 +5065,30 @@ opset_import {
 
 <dl>
 <dt><tt>alpha</tt> : float</dt>
-<dd>Coefficient of SELU default to 1.6732.</dd>
+<dd></dd>
 <dt><tt>gamma</tt> : float</dt>
-<dd>Coefficient of SELU default to 1.0507.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -5849,8 +5143,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Shape"></a><a name="shape">**Shape**</a>
 
-  Takes a tensor as input and outputs an 1D int64 tensor containing the shape of the input tensor.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5865,23 +5157,23 @@ opset_import {
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>shape</tt> : T1</dt>
-<dd>Shape of the input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double), tensor(int8), tensor(int16), tensor(int32), tensor(int64), tensor(uint8), tensor(uint16), tensor(bool)</dt>
-<dd>Input tensor can be of arbitrary type.</dd>
+<dd></dd>
 <dt><tt>T1</tt> : tensor(int64)</dt>
-<dd>Constrains output to int64 tensor.</dd>
+<dd></dd>
 </dl>
 
 
@@ -5920,10 +5212,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Sigmoid"></a><a name="sigmoid">**Sigmoid**</a>
 
-  Sigmoid takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the sigmoid function, y = 1 / (1 + exp(-x)), is applied to the
-  tensor elementwise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -5938,21 +5226,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -5984,8 +5272,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Size"></a><a name="size">**Size**</a>
 
-  Takes a tensor as input and outputs a int64 scalar that equals to the total number of elements of the input tensor.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -6000,23 +5286,23 @@ opset_import {
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>size</tt> : T1</dt>
-<dd>Total number of elements of the input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double), tensor(int8), tensor(int16), tensor(int32), tensor(int64), tensor(uint8), tensor(uint16), tensor(bool)</dt>
-<dd>Input tensor can be of arbitrary type.</dd>
+<dd></dd>
 <dt><tt>T1</tt> : int64</dt>
-<dd>Constrains output to int64 scalar.</dd>
+<dd></dd>
 </dl>
 
 
@@ -6053,47 +5339,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Slice"></a><a name="slice">**Slice**</a>
 
-  Produces a slice of the input tensor along multiple axes. Similar to numpy:
-  https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html
-  
-  Slices uses `axes`, `starts` and `ends` attributes to specify the start and end
-  dimension for each axis in the list of axes, it uses this information to
-  slice the input `data` tensor. If a negative value is passed for any of the
-  start or end indices, it represent number of elements before the end of that
-  dimension. If the value passed to start or end is larger than the `n` (the
-  number of elements in this dimension), it represents `n`. For slicing to the
-  end of a dimension with unknown size, it is recommended to pass in `INT_MAX`.
-  If `axes` are omitted, they are set to `[0, ..., ndim-1]`.
-  
-  Example 1:
-  
-    data = [
-        [1, 2, 3, 4],
-        [5, 6, 7, 8],
-    ]
-    axes = [0, 1]
-    starts = [1, 0]
-    ends = [2, 3]
-  
-    result = [
-        [5, 6, 7],
-    ]
-  
-  
-  Example 2:
-  
-    data = [
-        [1, 2, 3, 4],
-        [5, 6, 7, 8],
-    ]
-    starts = [0, 1]
-    ends = [-1, 1000]
-  
-    result = [
-        [2, 3, 4],
-    ]
-  
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -6108,32 +5353,32 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints</dt>
-<dd>Axes that `starts` and `ends` apply to. It's optional. If not present, will be treated as [0, 1, ..., len(`starts`) - 1].</dd>
+<dd></dd>
 <dt><tt>ends</tt> : list of ints (required)</dt>
-<dd>Ending indices (exclusive) of corresponding axis in axes`</dd>
+<dd></dd>
 <dt><tt>starts</tt> : list of ints (required)</dt>
-<dd>Starting indices of corresponding axis in `axes`</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>Tensor of data to extract slices from.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Sliced data tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -6255,22 +5500,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Softmax"></a><a name="softmax">**Softmax**</a>
 
-  The operator computes the softmax (normalized exponential) values for each layer in the batch
-   of the given input. The input is a 2-D tensor (Tensor<float>) of size
-  (batch_size x input_feature_dimensions). The output tensor has the same shape
-  and contains the softmax values of the corresponding input.
-  
-  X does not need to explicitly be a 2D vector; rather, it will be
-  coerced into one. For an arbitrary n-dimensional tensor
-  X \in [a_0, a_1, ..., a_{k-1}, a_k, ..., a_{n-1}] and k is
-  the axis provided, then X will be coerced into a 2-dimensional tensor with
-  dimensions [a_0 * ... * a_{k-1}, a_k * ... * a_{n-1}]. For the default
-  case where axis=1, this means the X tensor will be coerced into a 2D tensor
-  of dimensions [a_0, a_1 * ... * a_{n-1}], where a_0 is often the batch size.
-  In this situation, we must have a_0 = N and a_1 * ... * a_{n-1} = D.
-  Each of these dimensions must be matched correctly, or else the operator
-  will throw errors.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -6285,28 +5514,28 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>(int) default to 1; describes the axis of the inputs when coerced to 2D; defaults to one because the 0th axis most likely describes the batch_size</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>The input tensor that's coerced into a 2D matrix of size (NxD) as described above.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>The output values with the same shape as input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -6399,10 +5628,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Softplus"></a><a name="softplus">**Softplus**</a>
 
-  Softplus takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the softplus function, y = ln(exp(x) + 1), is applied to
-  the tensor elementwise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -6417,21 +5642,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>1D input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>1D input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -6463,8 +5688,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Softsign"></a><a name="softsign">**Softsign**</a>
 
-  Calculates the softsign (x/(1+|x|)) of the given input tensor element-wise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -6479,21 +5702,21 @@ opset_import {
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>1-D input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>The softsign (x/(1+|x|)) values of the input tensor computed element-wise</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -6525,10 +5748,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="SpaceToDepth"></a><a name="spacetodepth">**SpaceToDepth**</a>
 
-  SpaceToDepth rearranges blocks of spatial data into depth. More specifically,
-  this op outputs a copy of the input tensor where values from the height and width dimensions
-  are moved to the depth dimension.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -6543,36 +5762,32 @@ opset_import {
 
 <dl>
 <dt><tt>blocksize</tt> : int</dt>
-<dd>Blocks of [blocksize, blocksize] are moved.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input tensor of [N,C,H,W], where N is the batch axis, C is the channel or depth, H is the height and W is the width.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Output tensor of [N, C * blocksize * blocksize, H/blocksize, W/blocksize].</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="Split"></a><a name="split">**Split**</a>
-
-  Split a tensor into a list of tensors, along the specified
-  'axis'. Lengths of the parts can be specified using argument 'split'.
-  Otherwise, the tensor is split to equal sized parts.
 
 #### Versioning
 
@@ -6590,38 +5805,34 @@ Other versions of this operator: <a href="Changelog.md#Split-1">Split-1</a>
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>Which axis to split on</dd>
+<dd></dd>
 <dt><tt>split</tt> : list of ints</dt>
-<dd>length of each output</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>The tensor to split</dd>
+<dd></dd>
 </dl>
 
 #### Outputs (1 - &#8734;)
 
 <dl>
 <dt><tt>outputs</tt> (variadic) : T</dt>
-<dd>One or more outputs forming list of tensors after splitting</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="Sqrt"></a><a name="sqrt">**Sqrt**</a>
-
-  Square root takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the square root is, y = x^0.5, is applied to
-  the tensor elementwise. If x is negative, then it will return NaN.
 
 #### Versioning
 
@@ -6637,21 +5848,21 @@ opset_import {
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -6683,9 +5894,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Squeeze"></a><a name="squeeze">**Squeeze**</a>
 
-  Remove single-dimensional entries from the shape of a tensor.
-  Takes a  parameter `axes` with a list of axes to squeeze.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -6700,28 +5908,28 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints (required)</dt>
-<dd>List of positive integers, indicate the dimensions to squeeze.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>Tensors with at least max(dims) dimensions.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>squeezed</tt> : T</dt>
-<dd>Reshaped tensor with same data as input.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -6749,25 +5957,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Sub"></a><a name="sub">**Sub**</a>
 
-  Performs element-wise binary subtraction (with limited broadcast support).
-  
-  If necessary the right-hand-side argument will be broadcasted to match the
-  shape of left-hand-side argument. When broadcasting is specified, the second
-  tensor can either be of size 1 (a scalar value), or having its shape as a
-  contiguous subset of the first tensor's shape. The starting of the mutually
-  equal shape is specified by the argument "axis", and if it is not set, suffix
-  matching is assumed. 1-dim expansion doesn't work yet.
-  
-  For example, the following tensor shapes are supported (with broadcast=1):
-  
-    shape(A) = (2, 3, 4, 5), shape(B) = (,), i.e. B is a scalar
-    shape(A) = (2, 3, 4, 5), shape(B) = (5,)
-    shape(A) = (2, 3, 4, 5), shape(B) = (4, 5)
-    shape(A) = (2, 3, 4, 5), shape(B) = (3, 4), with axis=1
-    shape(A) = (2, 3, 4, 5), shape(B) = (2), with axis=0
-  
-  Attribute `broadcast=1` needs to be passed to enable broadcasting.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -6782,32 +5971,32 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>If set, defines the broadcast dimensions. See doc for details.</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Pass 1 to enable broadcasting</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>First operand, should share the type with the second operand.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>Second operand. With broadcasting can be of smaller size than A. If broadcasting is disabled it should be of the same size.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>C</tt> : T</dt>
-<dd>Result, has same dimensions and type as A</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -6862,9 +6051,6 @@ expect(node, inputs=[x, y], outputs=[z],
 
 ### <a name="Sum"></a><a name="sum">**Sum**</a>
 
-  Element-wise sum of each of the input tensors. All inputs and outputs must
-  have the same shape and data type.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -6879,21 +6065,21 @@ opset_import {
 
 <dl>
 <dt><tt>data_0</tt> (variadic) : T</dt>
-<dd>List of tensors for Sum.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>sum</tt> : T</dt>
-<dd>Output tensor. Same dimension as inputs.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -6938,8 +6124,6 @@ expect(node, inputs=[data_0, data_1], outputs=[result],
 
 ### <a name="Tanh"></a><a name="tanh">**Tanh**</a>
 
-  Calculates the hyperbolic tangent of the given input tensor element-wise.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -6954,21 +6138,21 @@ opset_import {
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>1-D input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>The hyperbolic tangent values of the input tensor computed element-wise</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -7000,8 +6184,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Tile"></a><a name="tile">**Tile**</a>
 
-  Repeat the elements of a tensor along an axis.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -7016,40 +6198,29 @@ opset_import {
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input tensor of any shape.</dd>
+<dd></dd>
 <dt><tt>tiles</tt> : T</dt>
-<dd>Number of repeated copies to make of the input tensor.</dd>
+<dd></dd>
 <dt><tt>axis</tt> : T</dt>
-<dd>Axis along which to repeat.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Output tensor of same shape and type as input.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <a name="TopK"></a><a name="topk">**TopK**</a>
-
-  Retrieve the top-K elements along a specified axis. Given an input tensor of
-  shape [a_1, a_2, ..., a_n, r] and integer argument k, return two outputs:
-    -Value tensor of shape [a_1, a_2, ..., a_{axis-1}, k, a_{axis+1}, ... a_n]
-      which contains the values of the top k elements along the specified axis
-    -Index tensor of shape [a_1, a_2, ..., a_{axis-1}, k, a_{axis+1}, ... a_n] which
-     contains the indices of the top k elements (original indices from the input
-     tensor).
-  
-  Given two equivalent values, this operator uses the indices along the axis  as
-   a tiebreaker. That is, the element with the lower index will appear first.
 
 #### Versioning
 
@@ -7065,34 +6236,34 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>Dimension on which to do the sort. Default -1, which indicates the last axis</dd>
+<dd></dd>
 <dt><tt>k</tt> : int (required)</dt>
-<dd>Number of top elements to retrieve</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Tensor of shape [a_1, a_2, ..., a_n, r]</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Values</tt> : T</dt>
-<dd>Tensor of shape [a_1, a_2, ..., a_{axis-1}, k, a_{axis+1}, ... a_n] containing top K values from the input tensor</dd>
+<dd></dd>
 <dt><tt>Indices</tt> : I</dt>
-<dd>Tensor of shape [a_1, a_2, ..., a_{axis-1}, k, a_{axis+1}, ... a_n] containing the corresponding input tensor indices for the top K values.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 <dt><tt>I</tt> : tensor(int64), tensor(int32)</dt>
-<dd>Constrain index tensor to integral types</dd>
+<dd></dd>
 </dl>
 
 
@@ -7133,10 +6304,6 @@ expect(node, inputs=[X], outputs=[values_ref, indices_ref],
 
 ### <a name="Transpose"></a><a name="transpose">**Transpose**</a>
 
-  Transpose the input tensor similar to numpy.transpose. For example, when
-  perm=(1, 0, 2), given an input tensor of shape (1, 2, 3), the output shape
-  will be (2, 1, 3).
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -7151,28 +6318,28 @@ opset_import {
 
 <dl>
 <dt><tt>perm</tt> : list of ints</dt>
-<dd>A list of integers. By default, reverse the dimensions, otherwise permute the axes according to the values given.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>An input tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>transposed</tt> : T</dt>
-<dd>Transposed output.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -7224,14 +6391,6 @@ expect(node, inputs=[data], outputs=[transposed],
 
 ### <a name="Unsqueeze"></a><a name="unsqueeze">**Unsqueeze**</a>
 
-  Insert single-dimensional entries to the shape of a tensor.
-  Takes one required argument `axes`, a list of dimensions that will be inserted.
-  Dimension indices in `axes` are as seen in the output tensor. For example:
-  
-    Given a tensor such that tensor with shape [3, 4, 5], then
-    Unsqueeze(tensor, axes=[0, 4]) has shape [1, 3, 4, 5, 1]
-  
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -7246,28 +6405,28 @@ opset_import {
 
 <dl>
 <dt><tt>axes</tt> : list of ints (required)</dt>
-<dd>List of positive integers, indicate the dimensions to be inserted</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>data</tt> : T</dt>
-<dd>Original tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>expanded</tt> : T</dt>
-<dd>Reshaped tensor with same data as input.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -7295,13 +6454,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <a name="Xor"></a><a name="xor">**Xor**</a>
 
-  Returns the tensor resulted from performing the `xor` logical operation
-  elementwise on the input tensors `A` and `B`.
-  
-  If broadcasting is enabled, the right-hand-side argument will be broadcasted
-  to match the shape of left-hand-side argument. See the doc of `Add` for a
-  detailed description of the broadcasting rules.
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -7316,34 +6468,34 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>If set, defines the broadcast dimensions.</dd>
+<dd></dd>
 <dt><tt>broadcast</tt> : int</dt>
-<dd>Enable broadcasting</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>A</tt> : T</dt>
-<dd>Left input tensor for the logical operator.</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>Right input tensor for the logical operator.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>C</tt> : T1</dt>
-<dd>Result tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(bool)</dt>
-<dd>Constrains input to boolean tensor.</dd>
+<dd></dd>
 <dt><tt>T1</tt> : tensor(bool)</dt>
-<dd>Constrains output to boolean tensor.</dd>
+<dd></dd>
 </dl>
 
 
@@ -7488,10 +6640,6 @@ expect(node, inputs=[x, y], outputs=[z],
 
 ### <sub>experimental</sub> <a name="ATen"></a><a name="aten">**ATen**</a>
 
-  Experimental allowing ATen operations to be accessed directly from Caffe2
-  to allow for quick prototyping when ONNX is missing standard versions of
-  and op
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -7506,29 +6654,25 @@ opset_import {
 
 <dl>
 <dt><tt>input</tt> (variadic) : T</dt>
-<dd>Arbitrary input</dd>
+<dd></dd>
 </dl>
 
 #### Outputs (1 - &#8734;)
 
 <dl>
 <dt><tt>output</tt> (variadic) : T</dt>
-<dd>Arbitrary output</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(bool), tensor(int32), tensor(int64), tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain output types to bool, int32, int64, float16, float, double tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="Affine"></a><a name="affine">**Affine**</a>
-
-  Affine takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the affine function, y = alpha * x + beta,
-  is applied to the tensor elementwise.
 
 #### Versioning
 
@@ -7544,53 +6688,34 @@ opset_import {
 
 <dl>
 <dt><tt>alpha</tt> : float</dt>
-<dd>Value of alpha</dd>
+<dd></dd>
 <dt><tt>beta</tt> : float</dt>
-<dd>Value of beta</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>1D input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>1D output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="ConstantFill"></a><a name="constantfill">**ConstantFill**</a>
-
-  The operator fills the elements of the output tensor with a constant value
-  specified by the 'value' attribute.
-  
-  The data type is specified by the 'dtype' attribute. The 'dtype' attribute must
-  be one of the data types specified in the 'DataType' enum field in the
-  TensorProto message. If the 'dtype' attribute is not provided, the data type of
-  'value' is used.
-  
-  The output tensor shape is specified by the 'shape' attribute. If the number of
-  input is 1, the shape will be identical to that of the input at run time with
-  optional additional dimensions appended at the end as specified by 'extra_shape'
-  attribute. In that case the 'shape' attribute should not be set.
-  
-  If input_as_shape is set to true, then the input should be a 1D tensor
-  containing the desired output shape (the dimensions specified in extra_shape
-  will also be appended)
-  
-  NOTE: Currently, it supports data type of float, int32, int64, and bool.
 
 #### Versioning
 
@@ -7606,46 +6731,42 @@ opset_import {
 
 <dl>
 <dt><tt>dtype</tt> : int</dt>
-<dd>The data type for the elements of the output tensor.Strictly must be one of the types from DataType enum in TensorProto.</dd>
+<dd></dd>
 <dt><tt>extra_shape</tt> : list of ints</dt>
-<dd>The additional dimensions appended at the end of the shape indicatedby the input blob.Cannot set the extra_shape argument when there is no input blob.</dd>
+<dd></dd>
 <dt><tt>input_as_shape</tt> : int</dt>
-<dd>1D tensor containing the desired output shape.  First input must be in CPU context.</dd>
+<dd></dd>
 <dt><tt>shape</tt> : list of ints</dt>
-<dd>The shape of the output tensor.Cannot set the shape argument and pass in an input at the same time.</dd>
+<dd></dd>
 <dt><tt>value</tt> : float</dt>
-<dd>The value for the elements of the output tensor.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs (0 - 1)
 
 <dl>
 <dt><tt>input</tt> (optional) : T1</dt>
-<dd>Input tensor (optional) to provide shape information.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T2</dt>
-<dd>Output tensor of constant values specified by 'value'argument and its type is specified by the 'dtype' argument</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T1</tt> : tensor(float), tensor(int32), tensor(int64), tensor(bool)</dt>
-<dd>Constrain input types to float, int32, int64, bool tensors.</dd>
+<dd></dd>
 <dt><tt>T2</tt> : tensor(float), tensor(int32), tensor(int64), tensor(bool)</dt>
-<dd>Constrain output types to float, int32, int64, bool tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="Crop"></a><a name="crop">**Crop**</a>
-
-  Crop and image to the specified spatial dimensions. If scale is given,
-  then optionally start the crop offset by the left/top border amounts.
-  If scale is not provided, crop the borders as provided.
 
 #### Versioning
 
@@ -7661,52 +6782,34 @@ opset_import {
 
 <dl>
 <dt><tt>border</tt> : list of ints</dt>
-<dd>A 1-D values of (leftBorder, topBorder, rightBorder, bottomBorder).</dd>
+<dd></dd>
 <dt><tt>scale</tt> : list of ints</dt>
-<dd>A 1-D values of (height, width).</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input tensor of shape [N,C,H,W]</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Result, has same type as input, with H and W dimensions reduced.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="FC"></a><a name="fc">**FC**</a>
-
-  Computes the result of passing an input vector X into a fully
-  connected layer with 2D weight matrix W and 1D bias vector b. That is,
-  the layer computes Y = X * W^T + b, where X has size (M x K),
-  W has size (N x K), b has size (N), and Y has size (M x N),
-  where M is often the batch size.
-  NOTE: X does not need to explicitly be a 2D vector; rather, it will be
-  coerced into one. For an arbitrary n-dimensional tensor
-  X \in [a_0, a_1, ...,a_{k-1}, a_k, ..., a_{n-1}] where a_i \in N+ and k is
-  the axis provided, then X will be coerced into a 2-dimensional tensor with
-  dimensions [a_0 * ... * a_{k-1}, a_k * ... * a_{n-1}]. For the default
-  case where axis=1, this means the X tensor will be coerced into a 2D tensor
-  of dimensions [a_0, a_1 * ... * a_{n-1}], where a_0 is often the batch size.
-  In this situation, we must have a_0 = M and a_1 * ... * a_{n-1} = K.
-  Lastly, even though b is a 1D vector of size N, it is copied/resized to
-  be size (M x N) implicitly and added to each vector in the batch.
-  Each of these dimensions must be matched correctly, or else the operator
-  will throw errors.
 
 #### Versioning
 
@@ -7722,45 +6825,38 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>(int32_t) default to 1; describes the axis of the inputs; defaults to one because the 0th axis most likely describes the batch_size</dd>
+<dd></dd>
 <dt><tt>axis_w</tt> : int</dt>
-<dd>(int32_t) default to 1; describes the axis of the weights; defaults to one because the 0th axis most likely describes the batch_size</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>input tensor that's coerced into a 2D matrix of size (MxK) as described above</dd>
+<dd></dd>
 <dt><tt>W</tt> : T</dt>
-<dd>2D blob of size (KxN) containing fully connected weight matrix</dd>
+<dd></dd>
 <dt><tt>B</tt> : T</dt>
-<dd>1D blob containing bias vector</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>2D output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="GRUUnit"></a><a name="gruunit">**GRUUnit**</a>
-
-  GRUUnit computes the activations of a standard GRU,
-  in a sequence-length aware fashion.
-  Concretely, given the (fused) inputs X (TxNxD), the previous hidden
-  state (NxD), and the sequence lengths (N), computes the GRU
-  activations, avoiding computation if the input is invalid (as in, the
-  value at X[t][n] >= seqLengths[n].
 
 #### Versioning
 
@@ -7776,34 +6872,34 @@ opset_import {
 
 <dl>
 <dt><tt>drop_states</tt> : int</dt>
-<dd>Bool to determine if hidden state is zeroes or passed along for timesteps past the given sequence_length.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>hidden_prev</tt> : T</dt>
-<dd>The previous GRU hidden state.</dd>
+<dd></dd>
 <dt><tt>gates</tt> : T</dt>
-<dd>Unactivated gate outputs from forget, update, and output gates, pre-activation.</dd>
+<dd></dd>
 <dt><tt>seq_lengths</tt> : T</dt>
-<dd>Array of sequence lengths.  len(seq_lengths) should equal batch size N.</dd>
+<dd></dd>
 <dt><tt>t</tt> : T</dt>
-<dd>The timestep for this operation.</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>hidden</tt> : T</dt>
-<dd>The new GRU hidden state calculated by this op.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -7836,27 +6932,25 @@ opset_import {
 
 <dl>
 <dt><tt>shape</tt> (optional) : T</dt>
-<dd>The shape of filled tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>The filled tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="Identity"></a><a name="identity">**Identity**</a>
-
-  Identity operator
 
 #### Versioning
 
@@ -7872,27 +6966,25 @@ opset_import {
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Tensor to copy input into.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="If"></a><a name="if">**If**</a>
-
-  If conditional
 
 #### Versioning
 
@@ -7908,39 +7000,36 @@ opset_import {
 
 <dl>
 <dt><tt>else_branch</tt> : graph (required)</dt>
-<dd>Graph to run if condition is false. Has N outputs: values you wish to be live-out to the enclosing scope. The number of outputs must match the number of outputs in the then_branch.</dd>
+<dd></dd>
 <dt><tt>then_branch</tt> : graph (required)</dt>
-<dd>Graph to run if condition is true. Has N outputs: values you wish to be live-out to the enclosing scope. The number of outputs must match the number of outputs in the else_branch.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>cond</tt> : B</dt>
-<dd>Condition for the if</dd>
+<dd></dd>
 </dl>
 
 #### Outputs (1 - &#8734;)
 
 <dl>
 <dt><tt>outputs</tt> (variadic) : V</dt>
-<dd>Values that are live-out to the enclosing scope.</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>V</tt> : tensor(float), tensor(int32), tensor(string), tensor(bool), tensor(uint8), tensor(int8), tensor(uint16), tensor(int16), tensor(int64), tensor(float16), tensor(double)</dt>
-<dd>All Tensor types</dd>
+<dd></dd>
 <dt><tt>B</tt> : tensor(bool)</dt>
-<dd>Only bool</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="ImageScaler"></a><a name="imagescaler">**ImageScaler**</a>
-
-  Scale and bias the input image. Bias values are stored in
-  the same ordering as the image pixel format.
 
 #### Versioning
 
@@ -7956,154 +7045,34 @@ opset_import {
 
 <dl>
 <dt><tt>bias</tt> : list of floats</dt>
-<dd>Bias applied to each channel, same size as C.</dd>
+<dd></dd>
 <dt><tt>scale</tt> : float</dt>
-<dd>(float, default 1.0) the scale to apply.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input tensor of shape [N,C,H,W]</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Result, has same shape and type as input</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="Loop"></a><a name="loop">**Loop**</a>
-
-  Generic Looping construct. This loop has multiple termination conditions:
-  
-  1) Trip count. Iteration count specified at runtime. Set by
-     specifying the input M. Optional. Set to empty string to omit.
-     Note that a static trip count (specified at graph construction time) can be
-     specified by passing in a constant node for input M.
-  2) Loop termination condition. This is an input to the op that determines
-     whether to run the first iteration and also a loop-carried dependency for
-     the body graph. The body graph must yield a value for the condition variable,
-     whether this input is provided or not.
-  
-  This table summarizes the operating modes of this operator with equivalent
-  C-style code:
-  
-      Operator inputs defined as (max_trip_count, condition_var).
-  
-      input ("", ""):
-          for (int i=0; ; ++i) {
-            cond = ... // Note this value is ignored, but is required in the body
-          }
-  
-      input ("", cond) // Note this is analogous to a while loop
-          bool cond = ...;
-          for (int i=0; cond; ++i) {
-            cond = ...;
-          }
-  
-      input ("", 1) // Note this is analogous to a do-while loop
-          bool cond = true
-          for (int i=0; cond; ++i) {
-            cond = ...;
-          }
-  
-      input (trip_count, "") // Note this is analogous to a for loop
-          int trip_count = ...
-          for (int i=0; i < trip_count; ++i) {
-            cond = ...; // ignored
-          }
-  
-      input (trip_count, cond)
-          int trip_count = ...;
-          bool cond = ...;
-          for (int i=0; i < trip_count && cond; ++i) {
-            cond = ...;
-          }
-  
-  
-  *Sample usage - cond as well as trip count*
-  
-      graph predict-net {
-        %a = Constant[value = <Scalar Tensor [3]>]()
-        %b = Constant[value = <Scalar Tensor [6]>]()
-        %keepgoing = Constant[value = <Scalar Tensor [1]>]()
-        %max_trip_count = Constant[value = <Scalar Tensor [10]>]()
-        %keepgoing_out, %b_out, %user_defined_vals = Loop[body = <graph body-net>](%max_trip_count, %keepgoing, %b)
-        return
-      }
-  
-      graph body-net (
-        %i[INT32, scalar]
-        %keepgoing[BOOL, scalar]
-        %b[INT32, scalar]
-      ) {
-        %my_local = Add(%a, %b)
-        %b_out = Sub(%a, %b)
-        %keepgoing_out = Greater(%my_local, %b_out)
-        %user_defined_vals = Add(%b, %b)
-        return %keepgoing_out, %b_out, %user_defined_vals
-      }
-  
-  *Sample equivalent C code*
-  
-      {
-        /* User-defined code (enclosing scope) */
-        int a = 3, b = 6;
-        bool keepgoing = true; // Analogous to input cond
-        /* End user-defined code */
-  
-        /* Implicitly-defined code */
-        const int max_trip_count = 10; // Analogous to input M
-        int user_defined_vals[]; // Imagine this is resizable
-        /* End implicitly-defined code */
-        for (int i=0; i < max_trip_count && keepgoing; ++i) {
-          /* User-defined code (loop body) */
-          int my_local = a + b; // Reading values in the enclosing scope is fine
-          b = a - b; // writes fine if we specify b as a loop-carried dependency
-          keepgoing = my_local > b; // keepgoing is a loop-carried dependency
-          user_defined_vals[i] = b + b;
-          /* End user-defined code */
-        }
-        // my_local = 123; // Can't do this. my_local was defined in the the body
-  
-        // These below values are live-out from the loop and therefore accessible
-        b_out; user_defined_vals; keepgoing_out;
-      }
-  
-  There are several things of note in this code snippet:
-  
-  1) Values from the enclosing scope (i.e. variable a here) are in scope and can
-     be referenced in the inputs of the loop.
-  2) Any variables which you wish to make available in the enclosing scope (i.e.
-     the variables b and keepgoing) must be declared as either loop-carried
-     dependencies (both at the op inputs and output and at the body net input and
-     output) or scan_outputs.
-  3) Values created in the body cannot be accessed in the enclosing scope.
-  
-  Note that the semantics of this op support "diagonal" or "wavefront" execution.
-  (See Step 3 here for an example:
-  https://devblogs.nvidia.com/optimizing-recurrent-neural-networks-cudnn-5/).
-  Frontends should emit multi-layer RNNs as a series of While operators (with
-  time being the inner looping dimension), with each successive layer consuming
-  the scan_outputs from the previous layer, possibly going through several
-  point-wise operators (e.g. dropout, residual connections, linear layer).
-  Concretely, the (possibly transformed) scan_outputs are referenced by the
-  subsequent layer as a LoopIndexTensor operating on a value in scope, not
-  necessarily a loop-carried dependency. Backends can recognize this pattern and
-  are permitted to schedule the execution of the multi-layer network in a
-  pipelined/"wavefront" fashion.
-  
 
 #### Versioning
 
@@ -8119,42 +7088,40 @@ opset_import {
 
 <dl>
 <dt><tt>body</tt> : graph (required)</dt>
-<dd>The graph run each iteration. It has 2+N inputs: (iteration_num, condition, loop carried dependencies...). It has 1+N+K outputs: (condition, loop carried dependencies..., scan_outputs...). Each scan_output is created by concatenating the value of the specified output value at the end of each iteration of the loop. It is an error if the dimensions of these values change across loop iterations.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs (3 - &#8734;)
 
 <dl>
 <dt><tt>M</tt> : I</dt>
-<dd>A maximum trip-count for the loop specified at runtime. Optional. pass empty string to skip.</dd>
+<dd></dd>
 <dt><tt>cond</tt> : B</dt>
-<dd>A boolean termination condition. Pass empty string to skip.</dd>
+<dd></dd>
 <dt><tt>v_initial</tt> (variadic) : V</dt>
-<dd>The initial values of any loop-carried dependencies (values that change across loop iterations)</dd>
+<dd></dd>
 </dl>
 
 #### Outputs (1 - &#8734;)
 
 <dl>
 <dt><tt>v_final_and_scan_outputs</tt> (variadic) : V</dt>
-<dd>Final N loop carried dependency values then K scan_outputs</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>V</tt> : tensor(float), tensor(int32), tensor(string), tensor(bool), tensor(uint8), tensor(int8), tensor(uint16), tensor(int16), tensor(int64), tensor(float16), tensor(double)</dt>
-<dd>All Tensor types</dd>
+<dd></dd>
 <dt><tt>I</tt> : int64</dt>
-<dd>Only int64</dd>
+<dd></dd>
 <dt><tt>B</tt> : bool</dt>
-<dd>Only bool</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="LoopIndexTensor"></a><a name="loopindextensor">**LoopIndexTensor**</a>
-
-  This is a special operator only valid inside the loop that supports the common case behavior of accessing the correct element of the input sequence in an RNN. This operator MUST be directly given the passed-in iteration number to the body of a Loop graph. This signals to back-ends that this is a direct indexing operation, with no transforms applied to the index.
 
 #### Versioning
 
@@ -8170,38 +7137,36 @@ opset_import {
 
 <dl>
 <dt><tt>axis</tt> : int</dt>
-<dd>Axis on which to index</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>T</tt> : T</dt>
-<dd>Tensor to be indexed (has N dimensions)</dd>
+<dd></dd>
 <dt><tt>loop_idx</tt> : I</dt>
-<dd>Loop index provided as input to the body graph</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>O</tt> : T</dt>
-<dd>Tensor of N - 1 dims that is a sub tensor of T</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float), tensor(int32), tensor(string), tensor(bool), tensor(uint8), tensor(int8), tensor(uint16), tensor(int16), tensor(int64), tensor(float16), tensor(double)</dt>
-<dd>All Tensor types</dd>
+<dd></dd>
 <dt><tt>I</tt> : int32</dt>
-<dd>Indices</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="MeanVarianceNormalization"></a><a name="meanvariancenormalization">**MeanVarianceNormalization**</a>
-
-  Perform mean variance normalization.
 
 #### Versioning
 
@@ -8217,38 +7182,34 @@ opset_import {
 
 <dl>
 <dt><tt>across_channels</tt> : int</dt>
-<dd>If 1, mean and variance are computed across channels. Default is 0.</dd>
+<dd></dd>
 <dt><tt>normalize_variance</tt> : int</dt>
-<dd>If 0, normalize the mean only.  Default is 1.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input tensor of shape [N,C,H,W]</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Result, has same shape and type as input</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="ParametricSoftplus"></a><a name="parametricsoftplus">**ParametricSoftplus**</a>
-
-  ParametricSoftplus takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the softplus function, y = alpha * ln(exp(beta * x) + 1), is applied to
-  the tensor elementwise.
 
 #### Versioning
 
@@ -8264,37 +7225,34 @@ opset_import {
 
 <dl>
 <dt><tt>alpha</tt> : float</dt>
-<dd>Value of alpha</dd>
+<dd></dd>
 <dt><tt>beta</tt> : float</dt>
-<dd>Value of beta</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>1D input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>1D input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="Scale"></a><a name="scale">**Scale**</a>
-
-  Scale takes one input data (Tensor<float>) and produces one output data
-  (Tensor<float>) whose value is the input data tensor scaled element-wise.
 
 #### Versioning
 
@@ -8310,38 +7268,33 @@ opset_import {
 
 <dl>
 <dt><tt>scale</tt> : float</dt>
-<dd>(float, default 1.0) the scale to apply.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>Input data to be scaled</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>Output data after scaling</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="ScaledTanh"></a><a name="scaledtanh">**ScaledTanh**</a>
 
-  Calculates the scaled hyperbolic tangent of the given input tensor element-wise,
-  alpha * tanh(beta * x). This operation can be done in an in-place fashion too,
-  by providing the same input and output blobs.
-      
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -8356,38 +7309,34 @@ opset_import {
 
 <dl>
 <dt><tt>alpha</tt> : float</dt>
-<dd>Scaling value</dd>
+<dd></dd>
 <dt><tt>beta</tt> : float</dt>
-<dd>Scaling value</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>input</tt> : T</dt>
-<dd>1-D input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>output</tt> : T</dt>
-<dd>The scaled hyperbolic tangent values of the input tensor computed element-wise</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
 ### <sub>experimental</sub> <a name="ThresholdedRelu"></a><a name="thresholdedrelu">**ThresholdedRelu**</a>
-
-  ThresholdedRelu takes one input data (Tensor<T>) and produces one output data
-  (Tensor<T>) where the rectified linear function, y = x for x > alpha, y = 0 otherwise,
-  is applied to the tensor elementwise.
 
 #### Versioning
 
@@ -8403,28 +7352,28 @@ opset_import {
 
 <dl>
 <dt><tt>alpha</tt> : float</dt>
-<dd>Threshold value</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>Input tensor</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>Output tensor</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain input and output types to float tensors.</dd>
+<dd></dd>
 </dl>
 
 
@@ -8483,30 +7432,6 @@ expect(node, inputs=[x], outputs=[y],
 
 ### <sub>experimental</sub> <a name="Upsample"></a><a name="upsample">**Upsample**</a>
 
-  Upsample the input tensor.
-  The width and height of the output tensor are:
-    output_width = floor(input_width * width_scale),
-    output_height = floor(input_height * height_scale).
-  
-  Example:
-    Given `data` tensor, width_scale, height_scale, mode,
-    Upsample the input 4-D tensor in nearest mode:
-  
-    data = [[[
-        [1, 2],
-        [3, 4]
-    ]]]
-    width_scale = 2
-    height_scale = 2
-    mode = "nearest"
-  
-    output = [[[
-        [1, 1, 2, 2],
-        [1, 1, 2, 2],
-        [3, 3, 4, 4],
-        [3, 3, 4, 4]
-    ]]]
-
 #### Versioning
 
 This operator is used if you are using version 1 of the default ONNX operator set until the next BC-breaking change to this operator; e.g., it will be used if your protobuf has:
@@ -8521,32 +7446,32 @@ opset_import {
 
 <dl>
 <dt><tt>height_scale</tt> : float (required)</dt>
-<dd>The scale along height dimension. It takes value greater than or equal to 1.</dd>
+<dd></dd>
 <dt><tt>mode</tt> : string</dt>
-<dd>Two interpolation modes: nearest(default), bilinear</dd>
+<dd></dd>
 <dt><tt>width_scale</tt> : float (required)</dt>
-<dd>The scale along width dimension. It takes value greater than or equal to 1.</dd>
+<dd></dd>
 </dl>
 
 #### Inputs
 
 <dl>
 <dt><tt>X</tt> : T</dt>
-<dd>4-D tensor, [N,C,H,W]</dd>
+<dd></dd>
 </dl>
 
 #### Outputs
 
 <dl>
 <dt><tt>Y</tt> : T</dt>
-<dd>4-D tensor after resizing, [N,C,H,W]</dd>
+<dd></dd>
 </dl>
 
 #### Type Constraints
 
 <dl>
 <dt><tt>T</tt> : tensor(bool), tensor(int32), tensor(int64), tensor(float16), tensor(float), tensor(double)</dt>
-<dd>Constrain output types to bool, int32, int64, float16, float, double tensors.</dd>
+<dd></dd>
 </dl>
 
 
